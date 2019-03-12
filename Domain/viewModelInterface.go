@@ -1,24 +1,24 @@
 package Domain
 
-type UserViewModel interface {
+type UserViewModelInterface interface {
 	GetFirstName() string
 	GetLastName() string
 	GetBirthDate() string
-	GetPassport() PassportViewModel
-	GetJobs() []JobsViewModel
+	GetPassport() PassportViewModelInterface
+	GetJobs() []JobsViewModelInterface
 	GetSex() string
 	GetMaritalStatus() string
 	GetChildren() int
 	Validate() bool
-	GetValidation() Validation
+	GetValidation() ValidationInterface
 }
 
-type PassportViewModel interface {
+type PassportViewModelInterface interface {
 	GetSeries() int
 	GetNumber() int
 }
 
-type JobsViewModel interface {
+type JobsViewModelInterface interface {
 	GetName() string
 	GetWage() int
 }

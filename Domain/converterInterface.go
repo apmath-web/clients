@@ -1,6 +1,6 @@
 package Domain
 
 type ConverterInterface interface {
-	FromViewModel(model UserViewModel) UserApplicationModel
-	FromApplicationModel(model UserApplicationModel) UserViewModel
+	FromViewModel(model UserViewModelInterface) UserApplicationModelInterface
+	FromApplicationModel(model UserApplicationModelInterface) UserViewModelInterface
 }
