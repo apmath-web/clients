@@ -1,6 +1,6 @@
 package Domain
 
-type ConvectorInterface interface {
+type ConverterInterface interface {
 	FromViewModel(model UserViewModel) UserApplicationModel
 	FromApplicationModel(model UserApplicationModel) UserViewModel
 }
