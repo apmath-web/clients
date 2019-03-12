@@ -1,88 +1,112 @@
 package Validation
 
-import "github.com/apmath-web/clients/Domain"
+import (
+	"encoding/json"
+	"github.com/apmath-web/clients/Domain"
+)
 
 type FirstNameMessage struct {
-	firstName string
+	text string
 }
 
-func (fn FirstNameMessage) GetText() string {
-	return fn.firstName
+func (m *FirstNameMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"firstName": m.text,
+	})
 }
 
 type LastNameMessage struct {
-	lastName string
+	text string
 }
 
-func (ln LastNameMessage) GetText() string {
-	return ln.lastName
+func (m *LastNameMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"lastName": m.text,
+	})
 }
 
 type BirthDateMessage struct {
-	birthDate string
+	text string
 }
 
-func (bd BirthDateMessage) GetText() string {
-	return bd.birthDate
+func (m *BirthDateMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"birthDate": m.text,
+	})
 }
 
 type SexMessage struct {
-	sex string
+	text string
 }
 
-func (s SexMessage) GetText() string {
-	return s.sex
+func (m *SexMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"sex": m.text,
+	})
 }
 
 type MaritalStatusMessage struct {
-	maritalStatus string
+	text string
 }
 
-func (ms MaritalStatusMessage) GetText() string {
-	return ms.maritalStatus
+func (m MaritalStatusMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"maritalStatus": m.text,
+	})
 }
 
 type ChildrenMessage struct {
-	children string
+	text string
 }
 
-func (c ChildrenMessage) GetText() string {
-	return c.children
+func (m *ChildrenMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"children": m.text,
+	})
 }
 
 type PassportSeriesMessage struct {
-	passportSeries string
+	text string
 }
 
-func (ps PassportSeriesMessage) GetText() string {
-	return ps.passportSeries
+func (m *PassportSeriesMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"passportSeries": m.text,
+	})
 }
 
 type PassportNumberMessage struct {
-	passportNumber string
+	text string
 }
 
-func (pn PassportNumberMessage) GetText() string {
-	return pn.passportNumber
+func (m *PassportNumberMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"passportNumber": m.text,
+	})
 }
 
 type JobNameMessage struct {
-	jobName string
+	text string
 }
 
-func (jn JobNameMessage) GetText() string {
-	return jn.jobName
+func (m *JobNameMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"jobName": m.text,
+	})
 }
 
 type JobWageMessage struct {
-	jobWage string
+	text string
 }
 
-func (jw JobWageMessage) GetText() string {
-	return jw.jobWage
+func (m *JobWageMessage) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]string{
+		"jobWage": m.text,
+	})
 }
 
 type Validation struct {
+	message  string
 	messages []Domain.MessageInterface
 }
 
@@ -92,4 +116,20 @@ func (v *Validation) AddMessage(message Domain.MessageInterface) {
 
 func (v *Validation) GetMessages() []Domain.MessageInterface {
 	return v.messages
+}
+
+func (v *Validation) SetMessage(msg string) {
+	v.message = msg
+}
+
+func (v *Validation) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]interface{}{
+		"message":     v.message,
+		"description": v.messages,
+	})
+}
+
+func GenValidation() Domain.ValidationInterface {
+	v := new(Validation)
+	return v
 }
