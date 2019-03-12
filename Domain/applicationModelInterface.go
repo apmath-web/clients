@@ -1,33 +1,33 @@
 package Domain
 
-type UserApplicationModel interface {
+type UserApplicationModelInterface interface {
 	GetId() int
 	GetFirstName() string
 	GetLastName() string
 	GetBirthDate() string
-	GetPassport() PassportApplicationModel
-	GetJobs() []JobsApplicationModel
+	GetPassport() PassportApplicationModelInterface
+	GetJobs() []JobsApplicationModelInterface
 	GetSex() string
 	GetMaritalStatus() string
 	GetChildren() int
 	SetFirstName(firstName string)
 	SetLastName(lastName string)
 	SetBirthDate(birthDate string)
-	SetPassport(passport PassportApplicationModel)
-	SetJobs(jobs []JobsApplicationModel)
+	SetPassport(passport PassportApplicationModelInterface)
+	SetJobs(jobs []JobsApplicationModelInterface)
 	SetSex(sex string)
 	SetMaritalStatus(status string)
 	SetChildren(number int)
 }
 
-type PassportApplicationModel interface {
+type PassportApplicationModelInterface interface {
 	GetSeries() int
 	GetNumber() int
 	SetNumber(number int)
 	SetSeries(series int)
 }
 
-type JobsApplicationModel interface {
+type JobsApplicationModelInterface interface {
 	GetName() string
 	GetWage() int
 	SetName(name string)

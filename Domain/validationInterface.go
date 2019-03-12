@@ -1,11 +1,11 @@
 package Domain
 
-type Validation interface {
-	AddMessage(msg Message)
-	GetMessages() []Message
+type ValidationInterface interface {
+	AddMessage(msg MessageInterface)
+	GetMessages() []MessageInterface
 }
 
-type Message interface {
+type MessageInterface interface {
 	GetText() string
 	SetText() string
 }
