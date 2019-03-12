@@ -5,8 +5,12 @@ import (
 	"github.com/apmath-web/clients/Domain"
 )
 
-type FirstNameMessage struct {
+type Message struct {
 	text string
+}
+
+type FirstNameMessage struct {
+	Message
 }
 
 func (m *FirstNameMessage) MarshalJSON() (b []byte, e error) {
@@ -16,7 +20,7 @@ func (m *FirstNameMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type LastNameMessage struct {
-	text string
+	Message
 }
 
 func (m *LastNameMessage) MarshalJSON() (b []byte, e error) {
@@ -26,7 +30,7 @@ func (m *LastNameMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type BirthDateMessage struct {
-	text string
+	Message
 }
 
 func (m *BirthDateMessage) MarshalJSON() (b []byte, e error) {
@@ -36,7 +40,7 @@ func (m *BirthDateMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type SexMessage struct {
-	text string
+	Message
 }
 
 func (m *SexMessage) MarshalJSON() (b []byte, e error) {
@@ -46,7 +50,7 @@ func (m *SexMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type MaritalStatusMessage struct {
-	text string
+	Message
 }
 
 func (m MaritalStatusMessage) MarshalJSON() (b []byte, e error) {
@@ -56,7 +60,7 @@ func (m MaritalStatusMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type ChildrenMessage struct {
-	text string
+	Message
 }
 
 func (m *ChildrenMessage) MarshalJSON() (b []byte, e error) {
@@ -66,7 +70,7 @@ func (m *ChildrenMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type PassportSeriesMessage struct {
-	text string
+	Message
 }
 
 func (m *PassportSeriesMessage) MarshalJSON() (b []byte, e error) {
@@ -76,7 +80,7 @@ func (m *PassportSeriesMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type PassportNumberMessage struct {
-	text string
+	Message
 }
 
 func (m *PassportNumberMessage) MarshalJSON() (b []byte, e error) {
@@ -86,7 +90,7 @@ func (m *PassportNumberMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type JobNameMessage struct {
-	text string
+	Message
 }
 
 func (m *JobNameMessage) MarshalJSON() (b []byte, e error) {
@@ -96,7 +100,7 @@ func (m *JobNameMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type JobWageMessage struct {
-	text string
+	Message
 }
 
 func (m *JobWageMessage) MarshalJSON() (b []byte, e error) {
