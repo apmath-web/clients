@@ -2,6 +2,8 @@ package Domain
 
 type UserViewModelInterface interface {
 	UserModelInterface
+	GetPassport() PassportViewModelInterface
+	GetJobs() []JobsViewModelInterface
 	Validate() bool
 	GetValidation() ValidationInterface
 	MarshalJSON() (b []byte, e error)

@@ -4,8 +4,6 @@ type UserModelInterface interface {
 	GetFirstName() string
 	GetLastName() string
 	GetBirthDate() string
-	GetPassport() PassportApplicationModelInterface
-	GetJobs() []JobsApplicationModelInterface
 	GetSex() string
 	GetMaritalStatus() string
 	GetChildren() int
