@@ -9,6 +9,8 @@ type UserViewModel interface {
 	GetSex() string
 	GetMaritalStatus() string
 	GetChildren() int
+	Validate() bool
+	GetValidation() Validation
 }
 
 type PassportViewModel interface {
