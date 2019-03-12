@@ -7,5 +7,4 @@ type ValidationInterface interface {
 
 type MessageInterface interface {
 	GetText() string
-	SetText() string
 }
