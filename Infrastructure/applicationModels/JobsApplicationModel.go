@@ -12,10 +12,3 @@ func (j *JobsApplicationModel) GetName() string {
 func (j *JobsApplicationModel) GetWage() int {
 	return j.wage
 }
-
-func (j *JobsApplicationModel) SetName(name string) {
-	j.name = name
-}
-func (j *JobsApplicationModel) SetWage(wage int) {
-	j.wage = wage
-}

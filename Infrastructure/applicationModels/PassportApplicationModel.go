@@ -12,10 +12,3 @@ func (p *PassportApplicationModel) GetSeries() int {
 func (p *PassportApplicationModel) GetNumber() int {
 	return p.number
 }
-
-func (p *PassportApplicationModel) SetNumber(number int) {
-	p.number = number
-}
-func (p *PassportApplicationModel) SetSeries(series int) {
-	p.series = series
-}
