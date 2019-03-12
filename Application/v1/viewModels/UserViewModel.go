@@ -1,6 +1,9 @@
 package viewModels
 
-import "github.com/apmath-web/clients/Domain"
+import (
+	"encoding/json"
+	"github.com/apmath-web/clients/Domain"
+)
 
 type BasicUser struct {
 	firstName     string
@@ -56,4 +59,17 @@ func (u *UserViewModel) Validate() bool {
 
 func (u *UserViewModel) GetValidation() Domain.ValidationInterface {
 	return u.validation
+}
+
+func (u *UserViewModel) MarshalJSON() (b []byte, e error) {
+	return json.Marshal(map[string]interface{}{
+		"firstName":     u.firstName,
+		"lastName":      u.lastName,
+		"birthDate":     u.birthDate,
+		"passport":      u.passport,
+		"jobs":          u.jobs,
+		"sex":           u.sex,
+		"maritalStatus": u.maritalStatus,
+		"children":      u.children,
+	})
 }
