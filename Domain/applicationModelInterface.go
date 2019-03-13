@@ -1,16 +1,16 @@
 package Domain
 
-type UserApplicationModelInterface interface {
+type ClientApplicationModelInterface interface {
 	GetId() int
 	GetPassport() PassportApplicationModelInterface
-	GetJobs() []JobsApplicationModelInterface
-	UserModelInterface
+	GetJobs() []JobApplicationModelInterface
+	ClientModelInterface
 }
 
 type PassportApplicationModelInterface interface {
 	PassportModelInterface
 }
 
-type JobsApplicationModelInterface interface {
-	JobsModelInterface
+type JobApplicationModelInterface interface {
+	JobModelInterface
 }

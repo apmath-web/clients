@@ -1,7 +1,7 @@
 package Domain
 
-type RepositoryInterface interface {
-	GetUser(id int) UserApplicationModelInterface
-	SetUser(model UserApplicationModelInterface) int
-	ChangeUser(id int, model UserApplicationModelInterface)
+type ClientRepositoryInterface interface {
+	GetClient(id int) ClientApplicationModelInterface
+	SetClient(model ClientApplicationModelInterface) int
+	ChangeClient(id int, model ClientApplicationModelInterface)
 }
