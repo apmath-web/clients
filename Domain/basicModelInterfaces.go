@@ -1,6 +1,6 @@
 package Domain
 
-type UserModelInterface interface {
+type ClientModelInterface interface {
 	GetFirstName() string
 	GetLastName() string
 	GetBirthDate() string
@@ -14,7 +14,7 @@ type PassportModelInterface interface {
 	GetNumber() int
 }
 
-type JobsModelInterface interface {
+type JobModelInterface interface {
 	GetName() string
 	GetWage() int
 }
