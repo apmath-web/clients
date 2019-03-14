@@ -53,8 +53,48 @@ func (c *ClientViewModel) GetChildren() int {
 	return c.Children
 }
 
+func (c *ClientViewModel) validateFirstName() {
+
+}
+
+func (c *ClientViewModel) validateLastName() {
+
+}
+
+func (c *ClientViewModel) validateBirthDate() {
+
+}
+
+func (c *ClientViewModel) validateSex() {
+
+}
+
+func (c *ClientViewModel) validateMaritalStatus() {
+
+}
+
+func (c *ClientViewModel) validateChildren() {
+
+}
+
+func (c *ClientViewModel) validatePassport() {
+
+}
+
+func (c *ClientViewModel) validateJobs() {
+
+}
+
 func (c *ClientViewModel) Validate() bool {
-	return true
+	c.validateFirstName()
+	c.validateLastName()
+	c.validateBirthDate()
+	c.validateSex()
+	c.validateMaritalStatus()
+	c.validateChildren()
+	c.validateJobs()
+	c.validatePassport()
+	return c.validation.Empty()
 }
 
 func (c *ClientViewModel) GetValidation() Domain.ValidationInterface {
