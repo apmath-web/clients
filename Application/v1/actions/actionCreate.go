@@ -18,5 +18,12 @@ func Create(c *gin.Context) {
 		c.String(http.StatusBadRequest, string(str))
 		return
 	}
+	if !vm.Validate() {
+		validator := vm.GetValidation()
+		validator.SetMessage("Validation error")
+		str, _ := json.Marshal(validator)
+		c.String(http.StatusBadRequest, string(str))
+		return
+	}
 
 }
