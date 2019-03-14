@@ -133,6 +133,10 @@ func (v *Validation) MarshalJSON() (b []byte, e error) {
 	})
 }
 
+func (v *Validation) Empty() bool {
+	return (len(v.messages) == 0) && v.message == ""
+}
+
 func GenValidation() Domain.ValidationInterface {
 	v := new(Validation)
 	return v
