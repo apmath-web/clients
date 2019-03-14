@@ -5,8 +5,8 @@ import (
 )
 
 type PassportViewModel struct {
-	Series int
-	Number int
+	Series int `json:"series"`
+	Number int `json:"number"`
 }
 
 func (p *PassportViewModel) GetSeries() int {

@@ -5,8 +5,8 @@ import (
 )
 
 type JobViewModel struct {
-	Name string
-	Wage int
+	Name string `json:"name"`
+	Wage int    `json:"wage"`
 }
 
 func (j *JobViewModel) GetName() string {
