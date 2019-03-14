@@ -5,104 +5,21 @@ import (
 	"github.com/apmath-web/clients/Domain"
 )
 
-type FirstNameMessage struct {
-	text string
+type Message struct {
+	text, field string
 }
 
-func (m *FirstNameMessage) MarshalJSON() (b []byte, e error) {
+func (m *Message) MarshalJSON() (b []byte, e error) {
 	return json.Marshal(map[string]string{
-		"firstName": m.text,
+		m.field: m.text,
 	})
 }
 
-type LastNameMessage struct {
-	text string
-}
-
-func (m *LastNameMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"lastName": m.text,
-	})
-}
-
-type BirthDateMessage struct {
-	text string
-}
-
-func (m *BirthDateMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"birthDate": m.text,
-	})
-}
-
-type SexMessage struct {
-	text string
-}
-
-func (m *SexMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"sex": m.text,
-	})
-}
-
-type MaritalStatusMessage struct {
-	text string
-}
-
-func (m MaritalStatusMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"maritalStatus": m.text,
-	})
-}
-
-type ChildrenMessage struct {
-	text string
-}
-
-func (m *ChildrenMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"children": m.text,
-	})
-}
-
-type PassportSeriesMessage struct {
-	text string
-}
-
-func (m *PassportSeriesMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"passportSeries": m.text,
-	})
-}
-
-type PassportNumberMessage struct {
-	text string
-}
-
-func (m *PassportNumberMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"passportNumber": m.text,
-	})
-}
-
-type JobNameMessage struct {
-	text string
-}
-
-func (m *JobNameMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"jobName": m.text,
-	})
-}
-
-type JobWageMessage struct {
-	text string
-}
-
-func (m *JobWageMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"jobWage": m.text,
-	})
+func GenMessage(field, text string) *Message {
+	m := new(Message)
+	m.field = field
+	m.text = text
+	return m
 }
 
 type Validation struct {

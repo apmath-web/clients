@@ -30,13 +30,13 @@ func (j *JobViewModel) MarshalJSON() (b []byte, e error) {
 
 func (j *JobViewModel) validateName() {
 	if j.Name == "" || !validCompanyName.Match([]byte(j.Name)) {
-		j.validation.AddMessage(&Validation.JobNameMessage{"Incorrect symbols in name"})
+		j.validation.AddMessage(Validation.GenMessage("jobName", "Incorrect symbols in name"))
 	}
 }
 
 func (j *JobViewModel) validateWage() {
 	if j.Wage <= 0 {
-		j.validation.AddMessage(&Validation.JobWageMessage{"Minus value of wage"})
+		j.validation.AddMessage(Validation.GenMessage("jobWage", "Minus value of wage"))
 	}
 }
 
