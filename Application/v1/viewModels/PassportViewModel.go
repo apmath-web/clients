@@ -9,7 +9,7 @@ import (
 type PassportViewModel struct {
 	Series     int `json:"series"`
 	Number     int `json:"number"`
-	validation Domain.ValidationInterface
+	validation Validation.Validation
 }
 
 func (p *PassportViewModel) GetSeries() int {
@@ -46,5 +46,5 @@ func (p *PassportViewModel) Validate() bool {
 }
 
 func (p *PassportViewModel) GetValidation() Domain.ValidationInterface {
-	return p.validation
+	return &p.validation
 }

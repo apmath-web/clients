@@ -9,7 +9,7 @@ import (
 type JobViewModel struct {
 	Name       string `json:"name"`
 	Wage       int    `json:"wage"`
-	validation Domain.ValidationInterface
+	validation Validation.Validation
 }
 
 func (j *JobViewModel) GetName() string {
@@ -46,5 +46,5 @@ func (j *JobViewModel) Validate() bool {
 }
 
 func (j *JobViewModel) GetValidation() Domain.ValidationInterface {
-	return j.validation
+	return &j.validation
 }

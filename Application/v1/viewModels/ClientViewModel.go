@@ -20,7 +20,7 @@ type ClientViewModel struct {
 	JsonClient
 	Passport   Domain.PassportViewModelInterface
 	Jobs       []Domain.JobViewModelInterface
-	validation Domain.ValidationInterface
+	validation Validation.Validation
 }
 
 func (c *ClientViewModel) GetFirstName() string {
@@ -129,7 +129,7 @@ func (c *ClientViewModel) Validate() bool {
 }
 
 func (c *ClientViewModel) GetValidation() Domain.ValidationInterface {
-	return c.validation
+	return &c.validation
 }
 
 func (c *ClientViewModel) MarshalJSON() (b []byte, e error) {
