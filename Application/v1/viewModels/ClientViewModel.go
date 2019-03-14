@@ -2,18 +2,19 @@ package viewModels
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/apmath-web/clients/Domain"
 )
 
 type BasicClient struct {
-	firstName     string
-	lastName      string
-	birthDate     string
-	passport      Domain.PassportViewModelInterface
-	jobs          []Domain.JobViewModelInterface
-	sex           string
-	maritalStatus string
-	children      int
+	FirstName     string                            `json:"firstName"`
+	LastName      string                            `json:"lastName"`
+	BirthDate     string                            `json:"birthDate"`
+	Passport      Domain.PassportViewModelInterface `json:"passport"`
+	Jobs          []Domain.JobViewModelInterface    `json:"jobs"`
+	Sex           string                            `json:"sex"`
+	MaritalStatus string                            `json:"maritalStatus"`
+	Children      int                               `json:"children"`
 }
 
 type ClientViewModel struct {
@@ -21,55 +22,55 @@ type ClientViewModel struct {
 	validation Domain.ValidationInterface
 }
 
-func (u *ClientViewModel) GetFirstName() string {
-	return u.firstName
+func (c *ClientViewModel) GetFirstName() string {
+	return c.FirstName
 }
 
-func (u *ClientViewModel) GetLastName() string {
-	return u.lastName
+func (c *ClientViewModel) GetLastName() string {
+	return c.LastName
 }
 
-func (u *ClientViewModel) GetBirthDate() string {
-	return u.birthDate
+func (c *ClientViewModel) GetBirthDate() string {
+	return c.BirthDate
 }
 
-func (u *ClientViewModel) GetPassport() Domain.PassportViewModelInterface {
-	return u.passport
+func (c *ClientViewModel) GetPassport() Domain.PassportViewModelInterface {
+	return c.Passport
 }
 
-func (u *ClientViewModel) GetJobs() []Domain.JobViewModelInterface {
-	return u.jobs
+func (c *ClientViewModel) GetJobs() []Domain.JobViewModelInterface {
+	return c.Jobs
 }
 
-func (u *ClientViewModel) GetSex() string {
-	return u.sex
+func (c *ClientViewModel) GetSex() string {
+	return c.Sex
 }
 
-func (u *ClientViewModel) GetMaritalStatus() string {
-	return u.maritalStatus
+func (c *ClientViewModel) GetMaritalStatus() string {
+	return c.MaritalStatus
 }
 
-func (u *ClientViewModel) GetChildren() int {
-	return u.children
+func (c *ClientViewModel) GetChildren() int {
+	return c.Children
 }
 
-func (u *ClientViewModel) Validate() bool {
+func (c *ClientViewModel) Validate() bool {
 	return true
 }
 
-func (u *ClientViewModel) GetValidation() Domain.ValidationInterface {
-	return u.validation
+func (c *ClientViewModel) GetValidation() Domain.ValidationInterface {
+	return c.validation
 }
 
-func (u *ClientViewModel) MarshalJSON() (b []byte, e error) {
+func (c *ClientViewModel) MarshalJSON() (b []byte, e error) {
 	return json.Marshal(map[string]interface{}{
-		"firstName":     u.firstName,
-		"lastName":      u.lastName,
-		"birthDate":     u.birthDate,
-		"passport":      u.passport,
-		"jobs":          u.jobs,
-		"sex":           u.sex,
-		"maritalStatus": u.maritalStatus,
-		"children":      u.children,
+		"firstName":     c.FirstName,
+		"lastName":      c.LastName,
+		"birthDate":     c.BirthDate,
+		"passport":      c.Passport,
+		"jobs":          c.Jobs,
+		"sex":           c.Sex,
+		"maritalStatus": c.MaritalStatus,
+		"children":      c.Children,
 	})
 }
