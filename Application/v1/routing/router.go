@@ -11,6 +11,7 @@ func GenRouter() *gin.Engine {
 	{
 		v1.GET("/hello_world", actions.HelloWorldHandler)
 		v1.POST("/", actions.Create)
+		v1.PUT("/:id", actions.Update)
 	}
 	return router
 }
