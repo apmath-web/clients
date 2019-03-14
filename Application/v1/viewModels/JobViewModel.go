@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/apmath-web/clients/Application/v1/Validation"
 	"github.com/apmath-web/clients/Domain"
-	"regexp"
 )
 
 type JobViewModel struct {
@@ -29,7 +28,7 @@ func (j *JobViewModel) MarshalJSON() (b []byte, e error) {
 }
 
 func (j *JobViewModel) validateName() {
-	if j.Name == "" || !validCompanyName.Match([]byte(j.Name)) {
+	if j.Name == "" {
 		j.validation.AddMessage(Validation.GenMessage("jobName", "Incorrect symbols in name"))
 	}
 }
@@ -49,5 +48,3 @@ func (j *JobViewModel) Validate() bool {
 func (j *JobViewModel) GetValidation() Domain.ValidationInterface {
 	return j.validation
 }
-
-var validCompanyName = regexp.MustCompile(`^[а-яА-Яa-zA-Z- \"\'\,\.]+$`)
