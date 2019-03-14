@@ -26,8 +26,18 @@ func (p *PassportViewModel) MarshalJSON() (b []byte, e error) {
 	})
 }
 
+func (p *PassportViewModel) validateNumber() {
+
+}
+
+func (p *PassportViewModel) validateSeries() {
+
+}
+
 func (p *PassportViewModel) Validate() bool {
-	return true
+	p.validateNumber()
+	p.validateSeries()
+	return p.validation.Empty()
 }
 
 func (p *PassportViewModel) GetValidation() Domain.ValidationInterface {
