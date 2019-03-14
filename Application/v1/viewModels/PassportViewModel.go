@@ -1,23 +1,25 @@
 package viewModels
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type PassportViewModel struct {
-	series int
-	number int
+	Series int
+	Number int
 }
 
 func (p *PassportViewModel) GetSeries() int {
-	return p.series
+	return p.Series
 }
 
 func (p *PassportViewModel) GetNumber() int {
-	return p.number
+	return p.Number
 }
 
 func (p *PassportViewModel) MarshalJSON() (b []byte, e error) {
 	return json.Marshal(map[string]int{
-		"series": p.series,
-		"number": p.number,
+		"Series": p.Series,
+		"Number": p.Number,
 	})
 }
