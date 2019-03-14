@@ -26,8 +26,18 @@ func (j *JobViewModel) MarshalJSON() (b []byte, e error) {
 	})
 }
 
+func (j *JobViewModel) validateName() {
+
+}
+
+func (j *JobViewModel) validateWage() {
+
+}
+
 func (j *JobViewModel) Validate() bool {
-	return true
+	j.validateName()
+	j.validateWage()
+	return j.validation.Empty()
 }
 
 func (j *JobViewModel) GetValidation() Domain.ValidationInterface {
