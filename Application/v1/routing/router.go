@@ -10,6 +10,7 @@ func GenRouter() *gin.Engine {
 	v1 := router.Group("/v1")
 	{
 		v1.GET("/hello_world", actions.HelloWorldHandler)
+		v1.POST("/", actions.Create)
 	}
 	return router
 }
