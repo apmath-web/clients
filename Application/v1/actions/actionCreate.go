@@ -25,5 +25,5 @@ func Create(c *gin.Context) {
 		c.String(http.StatusBadRequest, string(str))
 		return
 	}
-
+	c.JSON(http.StatusOK, gin.H{"id": 1})
 }
