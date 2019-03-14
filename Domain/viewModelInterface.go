@@ -13,11 +13,9 @@ type ClientViewModelInterface interface {
 type PassportViewModelInterface interface {
 	PassportModelInterface
 	MarshalJSON() (b []byte, e error)
-	UnmarshalJSON(b []byte) error
 }
 
 type JobViewModelInterface interface {
 	JobModelInterface
 	MarshalJSON() (b []byte, e error)
-	UnmarshalJSON(b []byte) error
 }
