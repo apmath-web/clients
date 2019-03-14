@@ -5,12 +5,8 @@ import (
 	"github.com/apmath-web/clients/Domain"
 )
 
-type Message struct {
-	text string
-}
-
 type FirstNameMessage struct {
-	Message
+	text string
 }
 
 func (m *FirstNameMessage) MarshalJSON() (b []byte, e error) {
@@ -20,7 +16,7 @@ func (m *FirstNameMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type LastNameMessage struct {
-	Message
+	text string
 }
 
 func (m *LastNameMessage) MarshalJSON() (b []byte, e error) {
@@ -30,7 +26,7 @@ func (m *LastNameMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type BirthDateMessage struct {
-	Message
+	text string
 }
 
 func (m *BirthDateMessage) MarshalJSON() (b []byte, e error) {
@@ -40,7 +36,7 @@ func (m *BirthDateMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type SexMessage struct {
-	Message
+	text string
 }
 
 func (m *SexMessage) MarshalJSON() (b []byte, e error) {
@@ -50,7 +46,7 @@ func (m *SexMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type MaritalStatusMessage struct {
-	Message
+	text string
 }
 
 func (m MaritalStatusMessage) MarshalJSON() (b []byte, e error) {
@@ -60,7 +56,7 @@ func (m MaritalStatusMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type ChildrenMessage struct {
-	Message
+	text string
 }
 
 func (m *ChildrenMessage) MarshalJSON() (b []byte, e error) {
@@ -70,7 +66,7 @@ func (m *ChildrenMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type PassportSeriesMessage struct {
-	Message
+	text string
 }
 
 func (m *PassportSeriesMessage) MarshalJSON() (b []byte, e error) {
@@ -80,7 +76,7 @@ func (m *PassportSeriesMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type PassportNumberMessage struct {
-	Message
+	text string
 }
 
 func (m *PassportNumberMessage) MarshalJSON() (b []byte, e error) {
@@ -90,7 +86,7 @@ func (m *PassportNumberMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type JobNameMessage struct {
-	Message
+	text string
 }
 
 func (m *JobNameMessage) MarshalJSON() (b []byte, e error) {
@@ -100,7 +96,7 @@ func (m *JobNameMessage) MarshalJSON() (b []byte, e error) {
 }
 
 type JobWageMessage struct {
-	Message
+	text string
 }
 
 func (m *JobWageMessage) MarshalJSON() (b []byte, e error) {
