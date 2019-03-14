@@ -12,8 +12,8 @@ func TestCreditViewModel(t *testing.T) {
 		"lastName":  "Kovalenko",
 		"birthDate": "2019-01-02",
 		"Passport": map[string]int{
-			"series": 23423,
-			"number": 4342345,
+			"series": 2342,
+			"number": 434345,
 		},
 		"Jobs": []map[string]interface{}{
 			{
@@ -26,15 +26,18 @@ func TestCreditViewModel(t *testing.T) {
 			},
 		},
 		"sex":           "male",
-		"maritalStatus": "maried",
+		"maritalStatus": "married",
 		"children":      4,
 	}
 	strTest, _ := json.Marshal(js)
 	fmt.Println(string(strTest))
 	m := new(ClientViewModel)
-	err := json.Unmarshal(strTest, m)
-	fmt.Println(err)
+	_ = json.Unmarshal(strTest, m)
 	fmt.Printf("%+v\n", m)
+	if !m.Validate() {
+		msg, _ := json.Marshal(m.GetValidation())
+		fmt.Println(string(msg))
+	}
 	strResult, _ := json.Marshal(m)
 	fmt.Println(string(strResult))
 
