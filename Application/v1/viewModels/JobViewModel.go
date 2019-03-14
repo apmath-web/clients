@@ -2,11 +2,13 @@ package viewModels
 
 import (
 	"encoding/json"
+	"github.com/apmath-web/clients/Domain"
 )
 
 type JobViewModel struct {
-	Name string `json:"name"`
-	Wage int    `json:"wage"`
+	Name       string `json:"name"`
+	Wage       int    `json:"wage"`
+	validation Domain.ValidationInterface
 }
 
 func (j *JobViewModel) GetName() string {
@@ -22,4 +24,12 @@ func (j *JobViewModel) MarshalJSON() (b []byte, e error) {
 		"name": j.Name,
 		"wage": j.Wage,
 	})
+}
+
+func (j *JobViewModel) Validate() bool {
+	return true
+}
+
+func (j *JobViewModel) GetValidation() Domain.ValidationInterface {
+	return j.validation
 }

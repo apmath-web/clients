@@ -2,11 +2,13 @@ package viewModels
 
 import (
 	"encoding/json"
+	"github.com/apmath-web/clients/Domain"
 )
 
 type PassportViewModel struct {
-	Series int `json:"series"`
-	Number int `json:"number"`
+	Series     int `json:"series"`
+	Number     int `json:"number"`
+	validation Domain.ValidationInterface
 }
 
 func (p *PassportViewModel) GetSeries() int {
@@ -22,4 +24,12 @@ func (p *PassportViewModel) MarshalJSON() (b []byte, e error) {
 		"Series": p.Series,
 		"Number": p.Number,
 	})
+}
+
+func (p *PassportViewModel) Validate() bool {
+	return true
+}
+
+func (p *PassportViewModel) GetValidation() Domain.ValidationInterface {
+	return p.validation
 }
