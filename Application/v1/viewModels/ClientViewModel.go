@@ -2,7 +2,9 @@ package viewModels
 
 import (
 	"encoding/json"
+	"github.com/apmath-web/clients/Application/v1/Validation"
 	"github.com/apmath-web/clients/Domain"
+	"time"
 )
 
 type JsonClient struct {
@@ -54,35 +56,64 @@ func (c *ClientViewModel) GetChildren() int {
 }
 
 func (c *ClientViewModel) validateFirstName() {
-
+	if c.FirstName == "" {
+		c.validation.AddMessage(Validation.GenMessage("firstName", "Is empty"))
+	}
 }
 
 func (c *ClientViewModel) validateLastName() {
-
+	if c.LastName == "" {
+		c.validation.AddMessage(Validation.GenMessage("lastName", "Is empty"))
+	}
 }
 
 func (c *ClientViewModel) validateBirthDate() {
-
+	if c.BirthDate == "" {
+		c.validation.AddMessage(Validation.GenMessage("BirthDate", "Is empty"))
+	}
+	if _, err := time.Parse("2006-01-02", c.BirthDate); err != nil {
+		c.validation.AddMessage(Validation.GenMessage("birthDate", "Incorrect date format"))
+	}
 }
 
 func (c *ClientViewModel) validateSex() {
-
+	if c.Sex != "male" && c.Sex != "female" {
+		c.validation.AddMessage(Validation.GenMessage("sex", "Unknown value"))
+	}
 }
 
 func (c *ClientViewModel) validateMaritalStatus() {
-
+	if c.MaritalStatus != "single" && c.MaritalStatus != "married" {
+		c.validation.AddMessage(Validation.GenMessage("maritalStatus", "Unknown value"))
+	}
 }
 
 func (c *ClientViewModel) validateChildren() {
-
+	if c.Children < 0 {
+		c.validation.AddMessage(Validation.GenMessage("children", "Minus value"))
+	}
+	if c.Children > 0 && c.MaritalStatus != "married" {
+		c.validation.AddMessage(Validation.GenMessage("children",
+			"You can't have any children if you aren't married"))
+	}
 }
 
 func (c *ClientViewModel) validatePassport() {
-
+	if !c.Passport.Validate() {
+		for _, msg := range c.Passport.GetValidation().GetMessages() {
+			c.validation.AddMessage(msg)
+		}
+	}
 }
 
 func (c *ClientViewModel) validateJobs() {
-
+	for _, job := range c.Jobs {
+		if !job.Validate() {
+			for _, msg := range job.GetValidation().GetMessages() {
+				c.validation.AddMessage(msg)
+			}
+		}
+	}
 }
 
 func (c *ClientViewModel) Validate() bool {
