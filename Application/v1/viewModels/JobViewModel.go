@@ -1,23 +1,25 @@
 package viewModels
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type JobViewModel struct {
-	name string
-	wage int
+	Name string
+	Wage int
 }
 
 func (j *JobViewModel) GetName() string {
-	return j.name
+	return j.Name
 }
 
 func (j *JobViewModel) GetWage() int {
-	return j.wage
+	return j.Wage
 }
 
 func (j *JobViewModel) MarshalJSON() (b []byte, e error) {
 	return json.Marshal(map[string]interface{}{
-		"name": j.name,
-		"wage": j.wage,
+		"name": j.Name,
+		"wage": j.Wage,
 	})
 }
