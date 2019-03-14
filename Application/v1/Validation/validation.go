@@ -6,107 +6,20 @@ import (
 )
 
 type Message struct {
-	text string
+	text, field string
 }
 
-type FirstNameMessage struct {
-	Message
-}
-
-func (m *FirstNameMessage) MarshalJSON() (b []byte, e error) {
+func (m *Message) MarshalJSON() (b []byte, e error) {
 	return json.Marshal(map[string]string{
-		"firstName": m.text,
+		m.field: m.text,
 	})
 }
 
-type LastNameMessage struct {
-	Message
-}
-
-func (m *LastNameMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"lastName": m.text,
-	})
-}
-
-type BirthDateMessage struct {
-	Message
-}
-
-func (m *BirthDateMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"birthDate": m.text,
-	})
-}
-
-type SexMessage struct {
-	Message
-}
-
-func (m *SexMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"sex": m.text,
-	})
-}
-
-type MaritalStatusMessage struct {
-	Message
-}
-
-func (m MaritalStatusMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"maritalStatus": m.text,
-	})
-}
-
-type ChildrenMessage struct {
-	Message
-}
-
-func (m *ChildrenMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"children": m.text,
-	})
-}
-
-type PassportSeriesMessage struct {
-	Message
-}
-
-func (m *PassportSeriesMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"passportSeries": m.text,
-	})
-}
-
-type PassportNumberMessage struct {
-	Message
-}
-
-func (m *PassportNumberMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"passportNumber": m.text,
-	})
-}
-
-type JobNameMessage struct {
-	Message
-}
-
-func (m *JobNameMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"jobName": m.text,
-	})
-}
-
-type JobWageMessage struct {
-	Message
-}
-
-func (m *JobWageMessage) MarshalJSON() (b []byte, e error) {
-	return json.Marshal(map[string]string{
-		"jobWage": m.text,
-	})
+func GenMessage(field, text string) *Message {
+	m := new(Message)
+	m.field = field
+	m.text = text
+	return m
 }
 
 type Validation struct {
@@ -131,6 +44,10 @@ func (v *Validation) MarshalJSON() (b []byte, e error) {
 		"message":     v.message,
 		"description": v.messages,
 	})
+}
+
+func (v *Validation) Empty() bool {
+	return (len(v.messages) == 0) && v.message == ""
 }
 
 func GenValidation() Domain.ValidationInterface {

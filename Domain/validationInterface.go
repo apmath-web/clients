@@ -5,6 +5,7 @@ type ValidationInterface interface {
 	GetMessages() []MessageInterface
 	SetMessage(msg string)
 	MarshalJSON() (b []byte, e error)
+	Empty() bool
 }
 
 type MessageInterface interface {
