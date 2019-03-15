@@ -9,7 +9,7 @@ script:
   - go test ./... -cover -v
   - docker build -t clients .
   - docker run -d -p 8080:8080 --name clients_container clients
-  - curl http://127.0.0.1:8080/v1/hello_world
+  - curl http://127.0.0.1:8080/v1/1
   - docker stop clients_container
   - docker rm clients_container
   - docker rmi clients
