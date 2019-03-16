@@ -1,49 +1,66 @@
 package applicationModels
 
+import "github.com/apmath-web/clients/Domain"
+
 type ClientApplicationModel struct {
-	id            int
-	firstName     string
-	lastName      string
-	birthDate     string
-	passport      PassportApplicationModel
-	jobs          []JobApplicationModel
-	sex           string
-	maritalStatus string
-	children      int
+	Id            int
+	FirstName     string
+	LastName      string
+	BirthDate     string
+	Passport      PassportApplicationModel
+	Jobs          []JobApplicationModel
+	Sex           string
+	MaritalStatus string
+	Children      int
 }
 
 func (u *ClientApplicationModel) GetId() int {
-	return u.id
+	return u.Id
 }
 
 func (u *ClientApplicationModel) GetFirstName() string {
-	return u.firstName
+	return u.FirstName
 }
 
 func (u *ClientApplicationModel) GetLastName() string {
-	return u.lastName
+	return u.LastName
 }
 
 func (u *ClientApplicationModel) GetBirthDate() string {
-	return u.birthDate
+	return u.BirthDate
 }
 
 func (u *ClientApplicationModel) GetPassport() PassportApplicationModel {
-	return u.passport
+	return u.Passport
 }
 
 func (u *ClientApplicationModel) GetJobs() []JobApplicationModel {
-	return u.jobs
+	return u.Jobs
 }
 
 func (u *ClientApplicationModel) GetSex() string {
-	return u.sex
+	return u.Sex
 }
 
 func (u *ClientApplicationModel) GetMaritalStatus() string {
-	return u.maritalStatus
+	return u.MaritalStatus
 }
 
 func (u *ClientApplicationModel) GetChildren() int {
-	return u.children
+	return u.Children
+}
+
+func (c *ClientApplicationModel) Hydrate(client Domain.ClientDomainModelInterface) {
+	c.FirstName = client.GetFirstName()
+	c.LastName = client.GetLastName()
+	c.BirthDate = client.GetBirthDate()
+	c.Sex = client.GetSex()
+	c.MaritalStatus = client.GetMaritalStatus()
+	c.Children = client.GetChildren()
+	for _, job := range client.GetJobs() {
+		tmpJob := JobApplicationModel{}
+		tmpJob.Hydrate(job)
+		c.Jobs = append(c.Jobs, tmpJob)
+	}
+
 }
