@@ -48,3 +48,8 @@ func (p *PassportViewModel) Validate() bool {
 func (p *PassportViewModel) GetValidation() Domain.ValidationInterface {
 	return &p.validation
 }
+
+func (p *PassportViewModel) Hydrate(passport Domain.PassportDomainModelInterface) {
+	p.Number = passport.GetNumber()
+	p.Series = passport.GetSeries()
+}

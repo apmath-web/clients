@@ -154,3 +154,18 @@ func (c *ClientViewModel) UnmarshalJSON(b []byte) error {
 	c.JsonClient = tmpClient
 	return err
 }
+
+func (c *ClientViewModel) Hydrate(client Domain.ClientDomainModelInterface) {
+	c.FirstName = client.GetFirstName()
+	c.LastName = client.GetLastName()
+	c.BirthDate = client.GetBirthDate()
+	c.Sex = client.GetSex()
+	c.MaritalStatus = client.GetMaritalStatus()
+	c.Children = client.GetChildren()
+	for _, job := range client.GetJobs() {
+		tmpJob := JobViewModel{}
+		tmpJob.Hydrate(job)
+		c.Jobs = append(c.Jobs, tmpJob)
+	}
+
+}
