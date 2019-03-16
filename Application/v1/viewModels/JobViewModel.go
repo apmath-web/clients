@@ -48,3 +48,8 @@ func (j *JobViewModel) Validate() bool {
 func (j *JobViewModel) GetValidation() Domain.ValidationInterface {
 	return &j.validation
 }
+
+func (j *JobViewModel) Hydrate(job Domain.JobModelDomainInterface) {
+	j.Wage = job.GetWage()
+	j.Name = job.GetName()
+}
