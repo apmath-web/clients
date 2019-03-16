@@ -1,14 +1,21 @@
 package applicationModels
 
+import "github.com/apmath-web/clients/Domain"
+
 type JobApplicationModel struct {
-	name string
-	wage int
+	Name string
+	Wage int
 }
 
 func (j *JobApplicationModel) GetName() string {
-	return j.name
+	return j.Name
 }
 
 func (j *JobApplicationModel) GetWage() int {
-	return j.wage
+	return j.Wage
+}
+
+func (j *JobApplicationModel) Hydrate(job Domain.JobModelDomainInterface) {
+	j.Wage = job.GetWage()
+	j.Name = job.GetName()
 }
