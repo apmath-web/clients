@@ -1,7 +1,7 @@
 package Domain
 
 type ClientRepositoryInterface interface {
-	GetClient(id int) ClientApplicationModelInterface
-	SetClient(model ClientApplicationModelInterface) int
-	ChangeClient(id int, model ClientApplicationModelInterface)
+	GetClient(id int) ClientDomainModelInterface
+	SetClient(model ClientDomainModelInterface) int
+	ChangeClient(id int, model ClientDomainModelInterface)
 }

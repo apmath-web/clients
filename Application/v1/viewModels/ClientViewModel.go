@@ -8,18 +8,18 @@ import (
 )
 
 type JsonClient struct {
-	FirstName     string `json:"firstName"`
-	LastName      string `json:"lastName"`
-	BirthDate     string `json:"birthDate"`
-	Sex           string `json:"sex"`
-	MaritalStatus string `json:"maritalStatus"`
-	Children      int    `json:"children"`
+	FirstName     string            `json:"firstName"`
+	LastName      string            `json:"lastName"`
+	BirthDate     string            `json:"birthDate"`
+	Sex           string            `json:"sex"`
+	MaritalStatus string            `json:"maritalStatus"`
+	Children      int               `json:"children"`
+	Passport      PassportViewModel `json:"passport"`
+	Jobs          []JobViewModel    `json:"jobs"`
 }
 
 type ClientViewModel struct {
 	JsonClient
-	Passport   Domain.PassportViewModelInterface
-	Jobs       []Domain.JobViewModelInterface
 	validation Validation.Validation
 }
 
@@ -35,11 +35,11 @@ func (c *ClientViewModel) GetBirthDate() string {
 	return c.BirthDate
 }
 
-func (c *ClientViewModel) GetPassport() Domain.PassportViewModelInterface {
+func (c *ClientViewModel) GetPassport() PassportViewModel {
 	return c.Passport
 }
 
-func (c *ClientViewModel) GetJobs() []Domain.JobViewModelInterface {
+func (c *ClientViewModel) GetJobs() []JobViewModel {
 	return c.Jobs
 }
 
@@ -137,8 +137,8 @@ func (c *ClientViewModel) MarshalJSON() (b []byte, e error) {
 		"firstName":     c.FirstName,
 		"lastName":      c.LastName,
 		"birthDate":     c.BirthDate,
-		"Passport":      c.Passport,
-		"Jobs":          c.Jobs,
+		"passport":      c.Passport,
+		"jobs":          c.Jobs,
 		"sex":           c.Sex,
 		"maritalStatus": c.MaritalStatus,
 		"children":      c.Children,
@@ -151,18 +151,6 @@ func (c *ClientViewModel) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &tmpClient); err != nil {
 		return err
 	}
-	tmpPassport := struct{ Passport PassportViewModel }{}
-	if err := json.Unmarshal(b, &tmpPassport); err != nil {
-		return err
-	}
-	tmpJobs := struct{ Jobs []JobViewModel }{}
-	if err := json.Unmarshal(b, &tmpJobs); err != nil {
-		return err
-	}
 	c.JsonClient = tmpClient
-	c.Passport = &tmpPassport.Passport
-	for _, value := range tmpJobs.Jobs {
-		c.Jobs = append(c.Jobs, &value)
-	}
 	return err
 }

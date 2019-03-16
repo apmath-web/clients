@@ -1,6 +1,0 @@
-package Domain
-
-type ConverterInterface interface {
-	FromViewModel(model ClientViewModelInterface) ClientApplicationModelInterface
-	FromApplicationModel(model ClientApplicationModelInterface) ClientViewModelInterface
-}
