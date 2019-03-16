@@ -1,16 +1,12 @@
 package applicationModels
 
-import (
-	"github.com/apmath-web/clients/Domain"
-)
-
 type ClientApplicationModel struct {
 	id            int
 	firstName     string
 	lastName      string
 	birthDate     string
-	passport      Domain.PassportApplicationModelInterface
-	jobs          []Domain.JobApplicationModelInterface
+	passport      PassportApplicationModel
+	jobs          []JobApplicationModel
 	sex           string
 	maritalStatus string
 	children      int
@@ -32,11 +28,11 @@ func (u *ClientApplicationModel) GetBirthDate() string {
 	return u.birthDate
 }
 
-func (u *ClientApplicationModel) GetPassport() Domain.PassportApplicationModelInterface {
+func (u *ClientApplicationModel) GetPassport() PassportApplicationModel {
 	return u.passport
 }
 
-func (u *ClientApplicationModel) GetJobs() []Domain.JobApplicationModelInterface {
+func (u *ClientApplicationModel) GetJobs() []JobApplicationModel {
 	return u.jobs
 }
 
