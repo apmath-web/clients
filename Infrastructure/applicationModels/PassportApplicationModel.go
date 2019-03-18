@@ -1,14 +1,21 @@
 package applicationModels
 
+import "github.com/apmath-web/clients/Domain"
+
 type PassportApplicationModel struct {
-	series int
-	number int
+	Series int
+	Number int
 }
 
 func (p *PassportApplicationModel) GetSeries() int {
-	return p.series
+	return p.Series
 }
 
 func (p *PassportApplicationModel) GetNumber() int {
-	return p.number
+	return p.Number
+}
+
+func (p *PassportApplicationModel) Hydrate(passport Domain.PassportDomainModelInterface) {
+	p.Number = passport.GetNumber()
+	p.Series = passport.GetSeries()
 }

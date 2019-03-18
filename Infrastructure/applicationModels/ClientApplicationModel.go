@@ -1,49 +1,83 @@
 package applicationModels
 
+import (
+	"encoding/json"
+	"github.com/apmath-web/clients/Domain"
+)
+
+type JsonClient struct {
+	Id            int                      `json:"id"`
+	FirstName     string                   `json:"firstName"`
+	LastName      string                   `json:"lastName"`
+	BirthDate     string                   `json:"birthDate"`
+	Sex           string                   `json:"sex"`
+	MaritalStatus string                   `json:"maritalStatus"`
+	Children      int                      `json:"children"`
+	Passport      PassportApplicationModel `json:"passport"`
+	Jobs          []JobApplicationModel    `json:"jobs"`
+}
+
 type ClientApplicationModel struct {
-	id            int
-	firstName     string
-	lastName      string
-	birthDate     string
-	passport      PassportApplicationModel
-	jobs          []JobApplicationModel
-	sex           string
-	maritalStatus string
-	children      int
+	JsonClient
 }
 
-func (u *ClientApplicationModel) GetId() int {
-	return u.id
+func (c *ClientApplicationModel) GetId() int {
+	return c.Id
 }
 
-func (u *ClientApplicationModel) GetFirstName() string {
-	return u.firstName
+func (c *ClientApplicationModel) GetFirstName() string {
+	return c.FirstName
 }
 
-func (u *ClientApplicationModel) GetLastName() string {
-	return u.lastName
+func (c *ClientApplicationModel) GetLastName() string {
+	return c.LastName
 }
 
-func (u *ClientApplicationModel) GetBirthDate() string {
-	return u.birthDate
+func (c *ClientApplicationModel) GetBirthDate() string {
+	return c.BirthDate
 }
 
-func (u *ClientApplicationModel) GetPassport() PassportApplicationModel {
-	return u.passport
+func (c *ClientApplicationModel) GetPassport() PassportApplicationModel {
+	return c.Passport
 }
 
-func (u *ClientApplicationModel) GetJobs() []JobApplicationModel {
-	return u.jobs
+func (c *ClientApplicationModel) GetJobs() []JobApplicationModel {
+	return c.Jobs
 }
 
-func (u *ClientApplicationModel) GetSex() string {
-	return u.sex
+func (c *ClientApplicationModel) GetSex() string {
+	return c.Sex
 }
 
-func (u *ClientApplicationModel) GetMaritalStatus() string {
-	return u.maritalStatus
+func (c *ClientApplicationModel) GetMaritalStatus() string {
+	return c.MaritalStatus
 }
 
-func (u *ClientApplicationModel) GetChildren() int {
-	return u.children
+func (c *ClientApplicationModel) GetChildren() int {
+	return c.Children
+}
+
+func (c *ClientApplicationModel) Hydrate(client Domain.ClientDomainModelInterface) {
+	c.FirstName = client.GetFirstName()
+	c.LastName = client.GetLastName()
+	c.BirthDate = client.GetBirthDate()
+	c.Sex = client.GetSex()
+	c.MaritalStatus = client.GetMaritalStatus()
+	c.Children = client.GetChildren()
+	for _, job := range client.GetJobs() {
+		tmpJob := JobApplicationModel{}
+		tmpJob.Hydrate(job)
+		c.Jobs = append(c.Jobs, tmpJob)
+	}
+
+}
+
+func (c *ClientApplicationModel) UnmarshalJSON(b []byte) error {
+	tmpClient := JsonClient{}
+	err := json.Unmarshal(b, &tmpClient)
+	if err := json.Unmarshal(b, &tmpClient); err != nil {
+		return err
+	}
+	c.JsonClient = tmpClient
+	return err
 }
