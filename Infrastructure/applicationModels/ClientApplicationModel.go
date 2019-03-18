@@ -81,3 +81,11 @@ func (c *ClientApplicationModel) UnmarshalJSON(b []byte) error {
 	c.JsonClient = tmpClient
 	return err
 }
+
+func (u *ClientApplicationModel) SetId(id int) {
+	if u.Id == -1 {
+		u.Id = id
+	} else {
+		panic("Your set one more ID!")
+	}
+}
