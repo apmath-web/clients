@@ -9,8 +9,8 @@ func GenRouter() *gin.Engine {
 	router := gin.Default()
 	v1 := router.Group("/v1")
 	{
-		v1.GET("/hello_world", actions.HelloWorldHandler)
 		v1.POST("/", actions.Create)
+		v1.GET("/:id", actions.Get)
 		v1.PUT("/:id", actions.Update)
 	}
 	return router
