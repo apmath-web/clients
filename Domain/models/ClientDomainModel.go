@@ -29,7 +29,7 @@ func (c *ClientDomainModel) GetPassport() Domain.PassportDomainModelInterface {
 	return c.Passport
 }
 
-func (c *ClientDomainModel) GetJobs() []Domain.JobModelDomainInterface {
+func (c *ClientDomainModel) GetJobs() []Domain.JobDomainModelInterface {
 	return c.Jobs
 }
 

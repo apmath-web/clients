@@ -8,7 +8,7 @@ type ClientDomainModelInterface interface {
 	GetMaritalStatus() string
 	GetChildren() int
 	GetPassport() PassportDomainModelInterface
-	GetJobs() []JobModelDomainInterface
+	GetJobs() []JobDomainModelInterface
 }
 
 type PassportDomainModelInterface interface {
@@ -16,7 +16,7 @@ type PassportDomainModelInterface interface {
 	GetNumber() int
 }
 
-type JobModelDomainInterface interface {
+type JobDomainModelInterface interface {
 	GetName() string
 	GetWage() int
 }
