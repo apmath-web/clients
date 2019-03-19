@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"clients/Domain"
+	"github.com/apmath-web/clients/Domain"
 )
 
 type ClientRepository struct {
@@ -25,7 +25,7 @@ func (r *ClientRepository) SetClient(model Domain.ClientDomainModelInterface) in
 	r.numberOfClients++
 	id := r.numberOfClients
 	r.clients[id] = model
-	return nil
+	return id
 }
 
 func (r *ClientRepository) ChangeClient(id int, model Domain.ClientDomainModelInterface) {
