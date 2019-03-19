@@ -21,11 +21,6 @@ func GenRepository() *ClientRepository {
 	return repo
 }
 
-//func GenRepository() Domain.ClientRepositoryInterface {
-//	repo := &ClientRepository{make(map[int]Domain.ClientDomainModelInterface), 0}
-//	return repo
-//}
-
 func (r *ClientRepository) GetClient(id int) Domain.ClientDomainModelInterface {
 	client, ok := r.clients[id]
 	if ok {
@@ -46,6 +41,6 @@ func (r *ClientRepository) ChangeClient(id int, model Domain.ClientDomainModelIn
 		r.clients[id] = model
 		return nil
 	} else {
-		return errors.New("Invalid id")
+		return errors.New("No client with such id")
 	}
 }
