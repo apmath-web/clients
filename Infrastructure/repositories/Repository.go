@@ -30,7 +30,7 @@ func (r *ClientRepository) SetClient(model Domain.ClientDomainModelInterface) in
 }
 
 func (r *ClientRepository) ChangeClient(id int, model Domain.ClientDomainModelInterface) error {
-	client, ok := r.clients[id]
+	_, ok := r.clients[id]
 	if ok {
 		r.clients[id] = model
 	} else {
