@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"errors"
 	"github.com/apmath-web/clients/Domain"
 )
 
@@ -28,6 +29,11 @@ func (r *ClientRepository) SetClient(model Domain.ClientDomainModelInterface) in
 	return id
 }
 
-func (r *ClientRepository) ChangeClient(id int, model Domain.ClientDomainModelInterface) {
-	r.clients[id] = model
+func (r *ClientRepository) ChangeClient(id int, model Domain.ClientDomainModelInterface) error {
+	client, ok := r.clients[id]
+	if ok {
+		r.clients[id] = model
+	} else {
+		return errors.New("Invalid id")
+	}
 }
