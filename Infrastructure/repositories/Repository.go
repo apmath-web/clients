@@ -3,17 +3,31 @@ package repositories
 import (
 	"errors"
 	"github.com/apmath-web/clients/Domain"
+	"sync"
 )
+
+package singleton
+
 
 type ClientRepository struct {
 	clients         map[int]Domain.ClientDomainModelInterface
 	numberOfClients int
 }
 
-func GenRepository() Domain.ClientRepositoryInterface {
-	repo := &ClientRepository{make(map[int]Domain.ClientDomainModelInterface), 0}
+var repo *ClientRepository
+var once sync.Once
+
+func GenRepository() *ClientRepository {
+	once.Do(func() {
+		repo = &ClientRepository{make(map[int]Domain.ClientDomainModelInterface), 0}
+	})
 	return repo
 }
+
+//func GenRepository() Domain.ClientRepositoryInterface {
+//	repo := &ClientRepository{make(map[int]Domain.ClientDomainModelInterface), 0}
+//	return repo
+//}
 
 func (r *ClientRepository) GetClient(id int) Domain.ClientDomainModelInterface {
 	client, ok := r.clients[id]
