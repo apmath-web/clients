@@ -40,7 +40,6 @@ func (r *ClientRepository) ChangeClient(id int, model Domain.ClientDomainModelIn
 	if ok {
 		r.clients[id] = model
 		return nil
-	} else {
-		return errors.New("No client with such id")
 	}
+	return errors.New("No client with such id")
 }
