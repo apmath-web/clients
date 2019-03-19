@@ -44,3 +44,18 @@ func (c *ClientDomainModel) GetMaritalStatus() string {
 func (c *ClientDomainModel) GetChildren() int {
 	return c.Children
 }
+
+func GenClientDomainModel(firstName string, lastName string, birthDate string, sex string,
+	maritalStatus string, children int, passport Domain.PassportDomainModelInterface,
+	jobs []Domain.JobModelDomainInterface) Domain.ClientDomainModelInterface {
+	dm := new(ClientDomainModel)
+	dm.FirstName = firstName
+	dm.LastName = lastName
+	dm.BirthDate = birthDate
+	dm.Sex = sex
+	dm.MaritalStatus = maritalStatus
+	dm.Children = children
+	dm.Passport = passport
+	dm.Jobs = jobs
+	return dm
+}
