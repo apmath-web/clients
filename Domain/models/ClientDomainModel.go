@@ -10,7 +10,7 @@ type ClientDomainModel struct {
 	MaritalStatus string
 	Children      int
 	Passport      Domain.PassportDomainModelInterface
-	Jobs          []Domain.JobModelDomainInterface
+	Jobs          []Domain.JobDomainModelInterface
 }
 
 func (c *ClientDomainModel) GetFirstName() string {
@@ -47,7 +47,7 @@ func (c *ClientDomainModel) GetChildren() int {
 
 func GenClientDomainModel(firstName string, lastName string, birthDate string, sex string,
 	maritalStatus string, children int, passport Domain.PassportDomainModelInterface,
-	jobs []Domain.JobModelDomainInterface) Domain.ClientDomainModelInterface {
+	jobs []Domain.JobDomainModelInterface) Domain.ClientDomainModelInterface {
 	dm := new(ClientDomainModel)
 	dm.FirstName = firstName
 	dm.LastName = lastName

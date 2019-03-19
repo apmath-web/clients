@@ -49,7 +49,7 @@ func (j *JobViewModel) GetValidation() Domain.ValidationInterface {
 	return &j.validation
 }
 
-func (j *JobViewModel) Hydrate(job Domain.JobModelDomainInterface) {
+func (j *JobViewModel) Hydrate(job Domain.JobDomainModelInterface) {
 	j.Wage = job.GetWage()
 	j.Name = job.GetName()
 }
