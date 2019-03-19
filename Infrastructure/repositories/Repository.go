@@ -33,6 +33,7 @@ func (r *ClientRepository) ChangeClient(id int, model Domain.ClientDomainModelIn
 	_, ok := r.clients[id]
 	if ok {
 		r.clients[id] = model
+		return nil
 	} else {
 		return errors.New("Invalid id")
 	}
