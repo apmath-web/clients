@@ -2,7 +2,7 @@ package actions
 
 import (
 	"encoding/json"
-	"github.com/apmath-web/clients/Application/v1/Validation"
+	"github.com/apmath-web/clients/Application/v1/validation"
 	"github.com/apmath-web/clients/Application/v1/viewModels"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -11,16 +11,16 @@ import (
 func Create(c *gin.Context) {
 	vm := new(viewModels.ClientViewModel)
 	if err := c.BindJSON(vm); err != nil {
-		validator := Validation.GenValidation()
-		validator.SetMessage("Validation error")
-		validator.AddMessage(Validation.GenMessage("json", err.Error()))
+		validator := validation.GenValidation()
+		validator.SetMessage("validation error")
+		validator.AddMessage(validation.GenMessage("json", err.Error()))
 		str, _ := json.Marshal(validator)
 		c.String(http.StatusBadRequest, string(str))
 		return
 	}
 	if !vm.Validate() {
 		validator := vm.GetValidation()
-		validator.SetMessage("Validation error")
+		validator.SetMessage("validation error")
 		str, _ := json.Marshal(validator)
 		c.String(http.StatusBadRequest, string(str))
 		return

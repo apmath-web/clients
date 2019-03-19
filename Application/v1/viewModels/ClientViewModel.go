@@ -2,7 +2,7 @@ package viewModels
 
 import (
 	"encoding/json"
-	"github.com/apmath-web/clients/Application/v1/Validation"
+	"github.com/apmath-web/clients/Application/v1/validation"
 	"github.com/apmath-web/clients/Domain"
 	"time"
 )
@@ -20,7 +20,7 @@ type JsonClient struct {
 
 type ClientViewModel struct {
 	JsonClient
-	validation Validation.Validation
+	validation validation.Validation
 }
 
 func (c *ClientViewModel) GetFirstName() string {
@@ -57,43 +57,43 @@ func (c *ClientViewModel) GetChildren() int {
 
 func (c *ClientViewModel) validateFirstName() {
 	if c.FirstName == "" {
-		c.validation.AddMessage(Validation.GenMessage("firstName", "Is empty"))
+		c.validation.AddMessage(validation.GenMessage("firstName", "Is empty"))
 	}
 }
 
 func (c *ClientViewModel) validateLastName() {
 	if c.LastName == "" {
-		c.validation.AddMessage(Validation.GenMessage("lastName", "Is empty"))
+		c.validation.AddMessage(validation.GenMessage("lastName", "Is empty"))
 	}
 }
 
 func (c *ClientViewModel) validateBirthDate() {
 	if c.BirthDate == "" {
-		c.validation.AddMessage(Validation.GenMessage("BirthDate", "Is empty"))
+		c.validation.AddMessage(validation.GenMessage("BirthDate", "Is empty"))
 	}
 	if _, err := time.Parse("2006-01-02", c.BirthDate); err != nil {
-		c.validation.AddMessage(Validation.GenMessage("birthDate", "Incorrect date format"))
+		c.validation.AddMessage(validation.GenMessage("birthDate", "Incorrect date format"))
 	}
 }
 
 func (c *ClientViewModel) validateSex() {
 	if c.Sex != "male" && c.Sex != "female" {
-		c.validation.AddMessage(Validation.GenMessage("sex", "Unknown value"))
+		c.validation.AddMessage(validation.GenMessage("sex", "Unknown value"))
 	}
 }
 
 func (c *ClientViewModel) validateMaritalStatus() {
 	if c.MaritalStatus != "single" && c.MaritalStatus != "married" {
-		c.validation.AddMessage(Validation.GenMessage("maritalStatus", "Unknown value"))
+		c.validation.AddMessage(validation.GenMessage("maritalStatus", "Unknown value"))
 	}
 }
 
 func (c *ClientViewModel) validateChildren() {
 	if c.Children < 0 {
-		c.validation.AddMessage(Validation.GenMessage("children", "Minus value"))
+		c.validation.AddMessage(validation.GenMessage("children", "Minus value"))
 	}
 	if c.Children > 0 && c.MaritalStatus != "married" {
-		c.validation.AddMessage(Validation.GenMessage("children",
+		c.validation.AddMessage(validation.GenMessage("children",
 			"You can't have any children if you aren't married"))
 	}
 }
