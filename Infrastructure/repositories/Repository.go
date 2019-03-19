@@ -6,9 +6,6 @@ import (
 	"sync"
 )
 
-package singleton
-
-
 type ClientRepository struct {
 	clients         map[int]Domain.ClientDomainModelInterface
 	numberOfClients int
