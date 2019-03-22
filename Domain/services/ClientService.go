@@ -28,7 +28,7 @@ func (cs *ClientService) Update(id Domain.IdInterface, model Domain.ClientDomain
 	return cs.repository.ChangeClient(id.Get(), model)
 }
 
-func (cs *ClientService) GenClientService() Domain.ClientServiceInterface {
+func GenClientService() Domain.ClientServiceInterface {
 	service := new(ClientService)
 	service.repository = repositories.GenRepository()
 	return service
