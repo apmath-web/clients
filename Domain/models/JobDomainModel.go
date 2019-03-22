@@ -3,8 +3,8 @@ package models
 import "github.com/apmath-web/clients/Domain"
 
 type JobDomainModel struct {
-	Name string `json:"name"`
-	Wage int    `json:"wage"`
+	Name string
+	Wage int
 }
 
 func (j *JobDomainModel) GetName() string {
