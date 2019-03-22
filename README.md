@@ -5,7 +5,13 @@ Micro service for handling user information
 ### SetUp
 Для корректной развертки приложения и дальнейшей разработки необходимо клонировать его в по следующему пути
 `.../go/src/github.com/apmath-web/`
+
 Клонировать: `git clone https://github.com/apmath-web/clients`
+
+
+## Install dependencies:
+go get -v github.com/gin-gonic/gin
+
 ### Running
 Для запуска необходимо запустить билд `application.go`
 `go build application.go`
