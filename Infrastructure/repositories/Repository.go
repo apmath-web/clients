@@ -14,7 +14,7 @@ type ClientRepository struct {
 var repo *ClientRepository
 var once sync.Once
 
-func GenRepository() *ClientRepository {
+func GenRepository() Domain.ClientRepositoryInterface {
 	once.Do(func() {
 		repo = &ClientRepository{make(map[int]Domain.ClientDomainModelInterface), 0}
 	})
