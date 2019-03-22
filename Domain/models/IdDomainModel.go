@@ -11,3 +11,9 @@ func (i *Id) Get() int {
 func (i *Id) Set(id int) {
 	i.id = id
 }
+
+func GenId(id int) *Id {
+	idModel := new(Id)
+	idModel.id = id
+	return idModel
+}
