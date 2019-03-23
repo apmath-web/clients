@@ -7,29 +7,24 @@ import (
 	"sync"
 )
 
-type ServiceManager struct {
-	repo           Domain.ClientRepositoryInterface
-	onceRepository sync.Once
+type serviceManagerClass struct {
 }
 
-func (sm *ServiceManager) GetClientRepository() Domain.ClientRepositoryInterface {
-	sm.onceRepository.Do(func() {
-		sm.repo = &repositories.ClientRepository{make(map[int]Domain.ClientDomainModelInterface), 0}
-	})
-	return sm.repo
+func (sm *serviceManagerClass) GetClientRepository() Domain.ClientRepositoryInterface {
+	return repositories.GenClientRepository()
 }
 
-func (sm *ServiceManager) GetClientService() Domain.ClientServiceInterface {
-	service := &services.ClientService{sm.GetClientRepository()}
+func (sm *serviceManagerClass) GetClientService() Domain.ClientServiceInterface {
+	service := services.GenClientService(sm.GetClientRepository())
 	return service
 }
 
-var serviceManager *ServiceManager
+var serviceManager *serviceManagerClass
 var once sync.Once
 
-func GetServiceManager() *ServiceManager {
+func GetServiceManager() *serviceManagerClass {
 	once.Do(func() {
-		serviceManager = &ServiceManager{}
+		serviceManager = &serviceManagerClass{}
 	})
 	return serviceManager
 }
