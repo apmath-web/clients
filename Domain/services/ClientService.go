@@ -6,11 +6,11 @@ import (
 )
 
 type ClientService struct {
-	repository Domain.ClientRepositoryInterface
+	Repository Domain.ClientRepositoryInterface
 }
 
 func (cs *ClientService) Add(model Domain.ClientDomainModelInterface) (Domain.IdInterface, error) {
-	id, err := cs.repository.SetClient(model)
+	id, err := cs.Repository.SetClient(model)
 	if err != nil {
 		return nil, err
 	}
@@ -18,17 +18,17 @@ func (cs *ClientService) Add(model Domain.ClientDomainModelInterface) (Domain.Id
 }
 
 func (cs *ClientService) Get(id Domain.IdInterface) (Domain.ClientDomainModelInterface, error) {
-	model, err := cs.repository.GetClient(id.Get())
+	model, err := cs.Repository.GetClient(id.Get())
 	return model, err
 
 }
 
 func (cs *ClientService) Update(id Domain.IdInterface, model Domain.ClientDomainModelInterface) error {
-	return cs.repository.ChangeClient(id.Get(), model)
+	return cs.Repository.ChangeClient(id.Get(), model)
 }
 
 func GenClientService(repository Domain.ClientRepositoryInterface) Domain.ClientServiceInterface {
 	service := new(ClientService)
-	service.repository = repository
+	service.Repository = repository
 	return service
 }

@@ -6,28 +6,28 @@ import (
 )
 
 type ClientRepository struct {
-	clients         map[int]Domain.ClientDomainModelInterface
-	numberOfClients int
+	Clients         map[int]Domain.ClientDomainModelInterface
+	NumberOfClients int
 }
 
 func (r *ClientRepository) GetClient(id int) (Domain.ClientDomainModelInterface, error) {
-	client, ok := r.clients[id]
+	client, ok := r.Clients[id]
 	if ok {
 		return client, nil
 	}
 	return nil, nil
 }
 func (r *ClientRepository) SetClient(model Domain.ClientDomainModelInterface) (int, error) {
-	r.numberOfClients++
-	id := r.numberOfClients
-	r.clients[id] = model
+	r.NumberOfClients++
+	id := r.NumberOfClients
+	r.Clients[id] = model
 	return id, nil
 }
 
 func (r *ClientRepository) ChangeClient(id int, model Domain.ClientDomainModelInterface) error {
-	_, ok := r.clients[id]
+	_, ok := r.Clients[id]
 	if ok {
-		r.clients[id] = model
+		r.Clients[id] = model
 		return nil
 	}
 	return errors.New("No client with such id")
