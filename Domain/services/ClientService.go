@@ -3,7 +3,6 @@ package services
 import (
 	"github.com/apmath-web/clients/Domain"
 	"github.com/apmath-web/clients/Domain/models"
-	"github.com/apmath-web/clients/Infrastructure/repositories"
 )
 
 type ClientService struct {
@@ -28,8 +27,8 @@ func (cs *ClientService) Update(id Domain.IdInterface, model Domain.ClientDomain
 	return cs.repository.ChangeClient(id.Get(), model)
 }
 
-func GenClientService() Domain.ClientServiceInterface {
+func GenClientService(repository Domain.ClientRepositoryInterface) Domain.ClientServiceInterface {
 	service := new(ClientService)
-	service.repository = repositories.GenRepository()
+	service.repository = repository
 	return service
 }

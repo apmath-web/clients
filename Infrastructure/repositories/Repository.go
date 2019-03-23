@@ -3,22 +3,11 @@ package repositories
 import (
 	"errors"
 	"github.com/apmath-web/clients/Domain"
-	"sync"
 )
 
 type ClientRepository struct {
 	clients         map[int]Domain.ClientDomainModelInterface
 	numberOfClients int
-}
-
-var repo *ClientRepository
-var once sync.Once
-
-func GenRepository() Domain.ClientRepositoryInterface {
-	once.Do(func() {
-		repo = &ClientRepository{make(map[int]Domain.ClientDomainModelInterface), 0}
-	})
-	return repo
 }
 
 func (r *ClientRepository) GetClient(id int) (Domain.ClientDomainModelInterface, error) {
