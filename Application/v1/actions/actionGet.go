@@ -5,7 +5,7 @@ import (
 	"github.com/apmath-web/clients/Application/v1/validation"
 	"github.com/apmath-web/clients/Application/v1/viewModels"
 	"github.com/apmath-web/clients/Domain/models"
-	"github.com/apmath-web/clients/Domain/services"
+	"github.com/apmath-web/clients/Infrastructure"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -22,7 +22,7 @@ func Get(c *gin.Context) {
 		return
 	}
 	IdModel := models.GenId(id)
-	service := services.GenClientService()
+	service := Infrastructure.GetServiceManager().GetClientService()
 	dm, err := service.Get(IdModel)
 	if err != nil {
 		validator := validation.GenValidation()
