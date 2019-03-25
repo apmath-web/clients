@@ -20,3 +20,8 @@ type JobDomainModelInterface interface {
 	GetName() string
 	GetWage() int
 }
+
+type IdInterface interface {
+	Get() int
+	Set(id int)
+}
