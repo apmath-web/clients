@@ -3,7 +3,7 @@ package actions
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/apmath-web/clients/Application/v1/Validation"
+	"github.com/apmath-web/clients/Application/v1/validation"
 	"github.com/apmath-web/clients/Application/v1/viewModels"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -13,9 +13,9 @@ import (
 func Get(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		validator := Validation.GenValidation()
-		validator.SetMessage("Validation error")
-		validator.AddMessage(Validation.GenMessage("id", err.Error()))
+		validator := validation.GenValidation()
+		validator.SetMessage("validation error")
+		validator.AddMessage(validation.GenMessage("id", err.Error()))
 		str, _ := json.Marshal(validator)
 		c.String(http.StatusBadRequest, string(str))
 		return

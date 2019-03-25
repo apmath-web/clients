@@ -2,14 +2,14 @@ package viewModels
 
 import (
 	"encoding/json"
-	"github.com/apmath-web/clients/Application/v1/Validation"
+	"github.com/apmath-web/clients/Application/v1/validation"
 	"github.com/apmath-web/clients/Domain"
 )
 
 type PassportViewModel struct {
 	Series     int `json:"series"`
 	Number     int `json:"number"`
-	validation Validation.Validation
+	validation validation.Validation
 }
 
 func (p *PassportViewModel) GetSeries() int {
@@ -29,13 +29,13 @@ func (p *PassportViewModel) MarshalJSON() (b []byte, e error) {
 
 func (p *PassportViewModel) validateNumber() {
 	if p.Number < 100000 || p.Number >= 1000000 {
-		p.validation.AddMessage(Validation.GenMessage("passportNumber", "Isn't right length"))
+		p.validation.AddMessage(validation.GenMessage("passportNumber", "Isn't right length"))
 	}
 }
 
 func (p *PassportViewModel) validateSeries() {
 	if p.Series < 1000 || p.Series >= 10000 {
-		p.validation.AddMessage(Validation.GenMessage("passportSeries", "Isn't right length"))
+		p.validation.AddMessage(validation.GenMessage("passportSeries", "Isn't right length"))
 	}
 }
 

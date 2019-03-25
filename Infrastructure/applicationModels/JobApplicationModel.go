@@ -15,7 +15,7 @@ func (j *JobApplicationModel) GetWage() int {
 	return j.Wage
 }
 
-func (j *JobApplicationModel) Hydrate(job Domain.JobModelDomainInterface) {
+func (j *JobApplicationModel) Hydrate(job Domain.JobDomainModelInterface) {
 	j.Wage = job.GetWage()
 	j.Name = job.GetName()
 }

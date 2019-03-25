@@ -2,14 +2,14 @@ package viewModels
 
 import (
 	"encoding/json"
-	"github.com/apmath-web/clients/Application/v1/Validation"
+	"github.com/apmath-web/clients/Application/v1/validation"
 	"github.com/apmath-web/clients/Domain"
 )
 
 type JobViewModel struct {
 	Name       string `json:"name"`
 	Wage       int    `json:"wage"`
-	validation Validation.Validation
+	validation validation.Validation
 }
 
 func (j *JobViewModel) GetName() string {
@@ -29,13 +29,13 @@ func (j *JobViewModel) MarshalJSON() (b []byte, e error) {
 
 func (j *JobViewModel) validateName() {
 	if j.Name == "" {
-		j.validation.AddMessage(Validation.GenMessage("jobName", "Is empty"))
+		j.validation.AddMessage(validation.GenMessage("jobName", "Is empty"))
 	}
 }
 
 func (j *JobViewModel) validateWage() {
 	if j.Wage <= 0 {
-		j.validation.AddMessage(Validation.GenMessage("jobWage", "Minus or zero value of wage"))
+		j.validation.AddMessage(validation.GenMessage("jobWage", "Minus or zero value of wage"))
 	}
 }
 
@@ -49,7 +49,7 @@ func (j *JobViewModel) GetValidation() Domain.ValidationInterface {
 	return &j.validation
 }
 
-func (j *JobViewModel) Hydrate(job Domain.JobModelDomainInterface) {
+func (j *JobViewModel) Hydrate(job Domain.JobDomainModelInterface) {
 	j.Wage = job.GetWage()
 	j.Name = job.GetName()
 }
