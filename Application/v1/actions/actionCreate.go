@@ -12,7 +12,7 @@ import (
 
 func Create(c *gin.Context) {
 	vm := viewModels.ClientViewModel{}
-	if err := c.BindJSON(vm); err != nil {
+	if err := c.BindJSON(&vm); err != nil {
 		validator := validation.GenValidation()
 		validator.SetMessage("validation error")
 		validator.AddMessage(validation.GenMessage("json", err.Error()))
