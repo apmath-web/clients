@@ -2,7 +2,6 @@ package actions
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/apmath-web/clients/Application/v1/mapper"
 	"github.com/apmath-web/clients/Application/v1/validation"
 	"github.com/apmath-web/clients/Application/v1/viewModels"
@@ -50,7 +49,6 @@ func Update(c *gin.Context) {
 		c.String(http.StatusBadRequest, string(str))
 		return
 	}
-	fmt.Println(id)
 	c.String(http.StatusNoContent, "")
 
 }
