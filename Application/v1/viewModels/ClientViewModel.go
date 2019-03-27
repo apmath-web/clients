@@ -162,6 +162,7 @@ func (c *ClientViewModel) Hydrate(client Domain.ClientDomainModelInterface) {
 	c.Sex = client.GetSex()
 	c.MaritalStatus = client.GetMaritalStatus()
 	c.Children = client.GetChildren()
+	c.Passport.Hydrate(client.GetPassport())
 	for _, job := range client.GetJobs() {
 		tmpJob := JobViewModel{}
 		tmpJob.Hydrate(job)
