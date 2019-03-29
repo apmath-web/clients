@@ -16,7 +16,7 @@ func (r *clientRepository) GetClient(id int) (Domain.ClientDomainModelInterface,
 	if ok {
 		return client, nil
 	}
-	return nil, nil
+	return nil, errors.New("No client with such id")
 }
 func (r *clientRepository) SetClient(model Domain.ClientDomainModelInterface) (int, error) {
 	r.NumberOfClients++
