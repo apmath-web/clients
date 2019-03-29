@@ -2,9 +2,11 @@ package actions
 
 import (
 	"encoding/json"
-	"fmt"
+	"github.com/apmath-web/clients/Application/v1/mapper"
 	"github.com/apmath-web/clients/Application/v1/validation"
 	"github.com/apmath-web/clients/Application/v1/viewModels"
+	"github.com/apmath-web/clients/Domain/models"
+	"github.com/apmath-web/clients/Infrastructure"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -20,8 +22,8 @@ func Update(c *gin.Context) {
 		c.String(http.StatusBadRequest, string(str))
 		return
 	}
-	vm := new(viewModels.ClientViewModel)
-	if err := c.BindJSON(vm); err != nil {
+	vm := viewModels.ClientViewModel{}
+	if err := c.BindJSON(&vm); err != nil {
 		validator := validation.GenValidation()
 		validator.SetMessage("validation error")
 		validator.AddMessage(validation.GenMessage("json", err.Error()))
@@ -36,7 +38,17 @@ func Update(c *gin.Context) {
 		c.String(http.StatusBadRequest, string(str))
 		return
 	}
-	fmt.Println(id)
+	dm := mapper.ClientViewMapper(vm)
+	IdModel := models.GenId(id)
+	service := Infrastructure.GetServiceManager().GetClientService()
+	err = service.Update(IdModel, dm)
+	if err != nil {
+		validator := validation.GenValidation()
+		validator.SetMessage(err.Error())
+		str, _ := json.Marshal(validator)
+		c.String(http.StatusBadRequest, string(str))
+		return
+	}
 	c.String(http.StatusNoContent, "")
 
 }
