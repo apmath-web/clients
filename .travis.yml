@@ -15,6 +15,7 @@ script:
   - docker run -d -p 8080:8080 --name clients_container clients
   - cd tests
   - java -jar karate.jar create-client-test.feature
+  - java -jar karate.jar get-client-test.feature
   - docker stop clients_container
   - docker rm clients_container
   - docker rmi clients
