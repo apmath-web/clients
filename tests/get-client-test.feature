@@ -1,10 +1,10 @@
-Feature: Create client integration test
+Feature: Get client integration test
 
   Background:
     * url 'http://localhost:8080/v1/'
     * configure headers = { 'Content-Type': 'application/json' }
 
-  Scenario Outline: create client positive
+  Scenario Outline: get client positive
     Given request <request>
     When method post
     Then status 201
@@ -32,7 +32,7 @@ Feature: Create client integration test
       | {"firstName":"TestUser","lastName":"Testerov","birthDate":"2010-01-12","passport":{"series":2374,"number":934732},"jobs":[{"name":"test1","wage":12873},{"name":"test4","wage":62452}],"sex":"female","maritalStatus":"married","children":4}                 |
 
 
-  Scenario Outline: create credit negative
+  Scenario Outline: get client negative
     Given path <ID>
     When method get
     Then status <Code>

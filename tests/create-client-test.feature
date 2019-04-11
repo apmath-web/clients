@@ -25,7 +25,7 @@ Feature: Create client integration test
       | {"firstName":"TestUser","lastName":"Testerov","birthDate":"2010-01-12","passport":{"series":2374,"number":934732},"jobs":[{"name":"test1","wage":12873},{"name":"test4","wage":62452}],"sex":"female","maritalStatus":"married","children":4}                 |
 
 
-  Scenario Outline: create credit negative
+  Scenario Outline: create client negative
     Given request <request>
     When method post
     Then status 400
