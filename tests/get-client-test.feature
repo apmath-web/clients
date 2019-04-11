@@ -14,7 +14,7 @@ Feature: Create client integration test
     Given path id
     When method get
     Then status 200
-    And match response == <request>
+    And match response contains <request>
 
 
     Examples:
