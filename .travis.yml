@@ -4,6 +4,8 @@ go:
   - "1.11.x"
 before_script:
   - go get -v github.com/gin-gonic/gin
+  - go get -v github.com/lib/pq
+  - go get -v github.com/jmoiron/sqlx
 script:
   - go build application.go
   - go test ./... -cover -v
