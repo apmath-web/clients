@@ -69,6 +69,7 @@ func (c *ClientApplicationModel) Hydrate(client Domain.ClientDomainModelInterfac
 		tmpJob.Hydrate(job)
 		c.Jobs = append(c.Jobs, tmpJob)
 	}
+	c.Passport.Hydrate(client.GetPassport())
 
 }
 
