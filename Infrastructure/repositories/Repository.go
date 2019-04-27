@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"database/sql"
 	"errors"
 	"fmt"
 	"github.com/apmath-web/clients/Domain"
@@ -25,32 +24,15 @@ func (r *clientRepository) insertClient(cl applicationModels.ClientApplicationMo
 	if err != nil {
 		return 0, err
 	}
-	var clientId int
-	err = tx.QueryRow("INSERT INTO clients "+
-		"(first_name, last_name, birth_date, sex, marital_status, children) "+
-		"VALUES "+
-		"($1, $2, $3, $4, $5, $6) RETURNING id",
-		cl.GetFirstName(), cl.GetLastName(), cl.GetBirthDate(),
-		cl.GetSex(), cl.GetMaritalStatus(), cl.GetChildren()).Scan(&clientId)
-	fmt.Printf("%+v", clientId)
-	if err != nil {
+	if id, err := cl.SaveClient(tx); err != nil {
 		return 0, err
+	} else {
+		if err = tx.Commit(); err != nil {
+			return 0, err
+		}
+		return id, nil
 	}
-	if _, err = r.InsertPassport(cl.GetPassport(), tx, clientId); err != nil {
-		return 0, err
-	}
-	err = tx.Commit()
-	if err != nil {
-		return 0, err
-	}
-	return clientId, nil
-}
 
-func (r *clientRepository) InsertPassport(pas applicationModels.PassportApplicationModel, tx *sql.Tx, clientId int) (sql.Result, error) {
-	return tx.Exec("INSERT INTO passports "+
-		"(series, number, client_id) VALUES "+
-		"($1, $2, $3) RETURNING id",
-		pas.GetSeries(), pas.GetNumber(), clientId)
 }
 
 func (r *clientRepository) SetClient(model Domain.ClientDomainModelInterface) (int, error) {

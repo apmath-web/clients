@@ -1,24 +1,24 @@
 package applicationModels
 
 import (
-	"encoding/json"
+	"database/sql"
 	"github.com/apmath-web/clients/Domain"
 )
 
 type JsonClient struct {
-	Id            int                      `json:"id"`
-	FirstName     string                   `json:"firstName"`
-	LastName      string                   `json:"lastName"`
-	BirthDate     string                   `json:"birthDate"`
-	Sex           string                   `json:"sex"`
-	MaritalStatus string                   `json:"maritalStatus"`
-	Children      int                      `json:"children"`
-	Passport      PassportApplicationModel `json:"passport"`
-	Jobs          []JobApplicationModel    `json:"jobs"`
+	Id            int    `db:"id"`
+	FirstName     string `db:"first_name"`
+	LastName      string `db:"last_name"`
+	BirthDate     string `db:"birth_date"`
+	Sex           string `db:"sex"`
+	MaritalStatus string `db:"marital_status"`
+	Children      int    `db:"children"`
 }
 
 type ClientApplicationModel struct {
 	JsonClient
+	Passport PassportApplicationModel
+	Jobs     []JobApplicationModel
 }
 
 func (c *ClientApplicationModel) GetId() int {
@@ -73,12 +73,38 @@ func (c *ClientApplicationModel) Hydrate(client Domain.ClientDomainModelInterfac
 
 }
 
-func (c *ClientApplicationModel) UnmarshalJSON(b []byte) error {
-	tmpClient := JsonClient{}
-	err := json.Unmarshal(b, &tmpClient)
-	if err := json.Unmarshal(b, &tmpClient); err != nil {
-		return err
+func (c *ClientApplicationModel) UpdateId(id int) {
+	c.Id = id
+	c.Passport.ClientId = id
+	tmpJobs := []JobApplicationModel{}
+	for _, job := range c.Jobs {
+		job.ClientId = id
+		tmpJobs = append(tmpJobs, job)
 	}
-	c.JsonClient = tmpClient
-	return err
+	c.Jobs = tmpJobs
+}
+
+func (c *ClientApplicationModel) SaveClient(tx *sql.Tx) (int, error) {
+	var clientId int
+	if err := tx.QueryRow("INSERT INTO clients "+
+		"(first_name, last_name, birth_date, sex, marital_status, children) "+
+		"VALUES "+
+		"($1, $2, $3, $4, $5, $6) RETURNING id",
+		c.GetFirstName(), c.GetLastName(), c.GetBirthDate(),
+		c.GetSex(), c.GetMaritalStatus(), c.GetChildren()).Scan(&clientId); err != nil {
+		return 0, err
+	}
+	c.UpdateId(clientId)
+	if err := c.Passport.SavePassport(tx); err != nil {
+		return 0, err
+	}
+	tmpJobs := []JobApplicationModel{}
+	for _, job := range c.Jobs {
+		if err := job.SaveJob(tx); err != nil {
+			return 0, err
+		}
+		tmpJobs = append(tmpJobs, job)
+	}
+	c.Jobs = tmpJobs
+	return clientId, nil
 }
