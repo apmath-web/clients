@@ -75,7 +75,7 @@ func (c *ClientApplicationModel) Hydrate(client Domain.ClientDomainModelInterfac
 
 }
 
-func (c *ClientApplicationModel) UpdateId(id int) {
+func (c *ClientApplicationModel) updateId(id int) {
 	c.Id = id
 	c.Passport.ClientId = id
 	tmpJobs := []JobApplicationModel{}
@@ -96,7 +96,7 @@ func (c *ClientApplicationModel) SaveClient(tx *sql.Tx) (int, error) {
 		c.GetSex(), c.GetMaritalStatus(), c.GetChildren()).Scan(&clientId); err != nil {
 		return 0, err
 	}
-	c.UpdateId(clientId)
+	c.updateId(clientId)
 	if err := c.Passport.SavePassport(tx); err != nil {
 		return 0, err
 	}
