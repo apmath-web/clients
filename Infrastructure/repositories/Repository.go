@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/apmath-web/clients/Domain"
 	"github.com/apmath-web/clients/Infrastructure/applicationModels"
+	"github.com/apmath-web/clients/Infrastructure/mapper"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"log"
@@ -16,7 +17,11 @@ type clientRepository struct {
 }
 
 func (r *clientRepository) GetClient(id int) (Domain.ClientDomainModelInterface, error) {
-	return nil, errors.New("No client with such id")
+	client := new(applicationModels.ClientApplicationModel)
+	if err := client.GetClient(id, r.db); err != nil {
+		return nil, err
+	}
+	return mapper.ClientApplicationMapper(*client), nil
 }
 
 func (r *clientRepository) insertClient(cl applicationModels.ClientApplicationModel) (int, error) {
@@ -32,7 +37,6 @@ func (r *clientRepository) insertClient(cl applicationModels.ClientApplicationMo
 		}
 		return id, nil
 	}
-
 }
 
 func (r *clientRepository) SetClient(model Domain.ClientDomainModelInterface) (int, error) {
@@ -58,7 +62,6 @@ const DB_CONNECT_STRING = "host=localhost port=5432 user=test password=test dbna
 func GenClientRepository() Domain.ClientRepositoryInterface {
 	once.Do(func() {
 		db, err := sqlx.Connect("postgres", DB_CONNECT_STRING)
-		fmt.Printf("%T", db)
 		if err != nil {
 			log.Fatal(err.Error())
 		}

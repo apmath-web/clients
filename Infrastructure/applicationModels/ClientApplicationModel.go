@@ -3,9 +3,10 @@ package applicationModels
 import (
 	"database/sql"
 	"github.com/apmath-web/clients/Domain"
+	"github.com/jmoiron/sqlx"
 )
 
-type JsonClient struct {
+type DbClient struct {
 	Id            int    `db:"id"`
 	FirstName     string `db:"first_name"`
 	LastName      string `db:"last_name"`
@@ -16,7 +17,7 @@ type JsonClient struct {
 }
 
 type ClientApplicationModel struct {
-	JsonClient
+	DbClient
 	Passport PassportApplicationModel
 	Jobs     []JobApplicationModel
 }
@@ -107,4 +108,21 @@ func (c *ClientApplicationModel) SaveClient(tx *sql.Tx) (int, error) {
 	}
 	c.Jobs = tmpJobs
 	return clientId, nil
+}
+
+func (c *ClientApplicationModel) GetClient(id int, db *sqlx.DB) error {
+	cl := DbClient{}
+	if err := db.Get(&cl, "SELECT * FROM clients WHERE id=$1", id); err != nil {
+		return err
+	}
+	c.DbClient = cl
+	if err := c.Passport.GetPassport(id, db); err != nil {
+		return err
+	}
+	jobs := []JobApplicationModel{}
+	if err := db.Select(&jobs, "SELECT * FROM jobs WHERE client_id=$1", id); err != nil {
+		return err
+	}
+	c.Jobs = jobs
+	return nil
 }

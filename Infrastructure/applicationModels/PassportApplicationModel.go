@@ -3,6 +3,7 @@ package applicationModels
 import (
 	"database/sql"
 	"github.com/apmath-web/clients/Domain"
+	"github.com/jmoiron/sqlx"
 )
 
 type PassportApplicationModel struct {
@@ -34,5 +35,17 @@ func (p *PassportApplicationModel) SavePassport(tx *sql.Tx) error {
 		return err
 	}
 	p.Id = passportId
+	return nil
+}
+
+func (p *PassportApplicationModel) GetPassport(clientId int, db *sqlx.DB) error {
+	pas := PassportApplicationModel{}
+	if err := db.Get(&pas, "SELECT * FROM passports WHERE client_id=$1", clientId); err != nil {
+		return err
+	}
+	p.Id = pas.Id
+	p.ClientId = pas.ClientId
+	p.Series = pas.Series
+	p.Number = pas.Number
 	return nil
 }
