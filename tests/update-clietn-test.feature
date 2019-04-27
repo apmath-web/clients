@@ -56,7 +56,6 @@ Feature: Update client integration test
     When  method put
     Then status 400
     And match response contains any { message:'#string',description:'#list'}
-    
 
 
     Examples:

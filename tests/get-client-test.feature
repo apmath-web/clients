@@ -31,12 +31,12 @@ Feature: Get client integration test
       | {"firstName":"TestUser","lastName":"Testerov","birthDate":"2001-08-23","passport":{"series":6125,"number":328741},"jobs":[{"name":"test1","wage":438765},{"name":"test4","wage":164425}],"sex":"male","maritalStatus":"married"}                              |
       | {"firstName":"TestUser","lastName":"Testerov","birthDate":"2010-01-12","passport":{"series":2374,"number":934731},"jobs":[{"name":"test1","wage":12873},{"name":"test4","wage":62452}],"sex":"female","maritalStatus":"married","children":4}                 |
 
-
   Scenario Outline: get client negative
     Given path <ID>
     When method get
     Then status <Code>
     And match response contains any { message:'#string',description:'#list'}
+
 
     Examples:
       | ID          | Code    |

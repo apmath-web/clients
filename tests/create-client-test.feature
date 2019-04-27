@@ -10,6 +10,7 @@ Feature: Create client integration test
     Then status 201
     And match response == { id:'#number' }
 
+
     Examples:
       | request                                                                                                                                                                                                                                                       |
       | {"birthDate":"2019-01-02","firstName":"TestUser","lastName":"Testerov","passport":{"series":1234,"number":847880},"jobs":[{"name":"test1","wage":72364},{"name":"test4","wage":67628}],"sex":"male","maritalStatus":"married"}                                |
@@ -24,13 +25,13 @@ Feature: Create client integration test
       | {"firstName":"TestUser","lastName":"Testerov","birthDate":"2001-08-23","passport":{"series":6125,"number":328740},"jobs":[{"name":"test1","wage":438765},{"name":"test4","wage":164425}],"sex":"male","maritalStatus":"married"}                              |
       | {"firstName":"TestUser","lastName":"Testerov","birthDate":"2010-01-12","passport":{"series":2374,"number":934730},"jobs":[{"name":"test1","wage":12873},{"name":"test4","wage":62452}],"sex":"female","maritalStatus":"married","children":4}                 |
 
-
   Scenario Outline: create client negative
     Given request <request>
     When method post
     Then status 400
     And match response contains{ message:'#string' }
     And match response contains any { message:'#string',description:'#list'}
+
 
     Examples:
       | request                                                                                                                                                                                                                                                       |
