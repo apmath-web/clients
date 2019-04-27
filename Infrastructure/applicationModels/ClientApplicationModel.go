@@ -144,7 +144,7 @@ func (c *ClientApplicationModel) UpdateClient(cl Domain.ClientDomainModelInterfa
 		queryString += fmt.Sprintf("sex = '%s', ", cl.GetSex())
 	}
 	if c.MaritalStatus != cl.GetMaritalStatus() {
-		queryString += fmt.Sprintf("marital_status = '%s', ", cl.GetFirstName())
+		queryString += fmt.Sprintf("marital_status = '%s', ", cl.GetMaritalStatus())
 	}
 	if c.Children != cl.GetChildren() {
 		queryString += fmt.Sprintf("children = '%d', ", cl.GetChildren())
@@ -152,7 +152,6 @@ func (c *ClientApplicationModel) UpdateClient(cl Domain.ClientDomainModelInterfa
 	if queryString != "UPDATE clients SET " {
 		queryString = queryString[0 : len(queryString)-2]
 		queryString += fmt.Sprintf(" WHERE id = %d;", c.Id)
-		fmt.Println(queryString)
 		if _, err := tx.Exec(queryString); err != nil {
 			return err
 		}
