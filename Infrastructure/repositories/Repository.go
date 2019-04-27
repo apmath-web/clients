@@ -8,6 +8,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"log"
+	"os"
 	"sync"
 )
 
@@ -41,7 +42,6 @@ func (r *clientRepository) insertClient(cl applicationModels.ClientApplicationMo
 func (r *clientRepository) SetClient(model Domain.ClientDomainModelInterface) (int, error) {
 	var client applicationModels.ClientApplicationModel
 	client.Hydrate(model)
-	fmt.Printf("%+v\n", model.GetPassport())
 	if id, err := r.insertClient(client); err != nil {
 		return 0, err
 	} else {
@@ -67,11 +67,19 @@ func (r *clientRepository) ChangeClient(id int, model Domain.ClientDomainModelIn
 var repo *clientRepository
 var once sync.Once
 
-const DB_CONNECT_STRING = "host=localhost port=6432 user=test password=test dbname=test sslmode=disable"
+func dbConfig() string {
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	user := os.Getenv("DB_USER")
+	pass := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_NAME")
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		host, port, user, pass, dbname)
+}
 
 func GenClientRepository() Domain.ClientRepositoryInterface {
 	once.Do(func() {
-		db, err := sqlx.Connect("postgres", DB_CONNECT_STRING)
+		db, err := sqlx.Connect("postgres", dbConfig())
 		if err != nil {
 			log.Fatal(err.Error())
 		}
