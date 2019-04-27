@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"errors"
 	"fmt"
 	"github.com/apmath-web/clients/Domain"
 	"github.com/apmath-web/clients/Infrastructure/applicationModels"
@@ -51,13 +50,24 @@ func (r *clientRepository) SetClient(model Domain.ClientDomainModelInterface) (i
 }
 
 func (r *clientRepository) ChangeClient(id int, model Domain.ClientDomainModelInterface) error {
-	return errors.New("No client with such id")
+	client := new(applicationModels.ClientApplicationModel)
+	if err := client.GetClient(id, r.db); err != nil {
+		return err
+	}
+	tx, err := r.db.Begin()
+	if err != nil {
+		return err
+	}
+	if err := client.UpdateClient(model, tx); err != nil {
+		return err
+	}
+	return tx.Commit()
 }
 
 var repo *clientRepository
 var once sync.Once
 
-const DB_CONNECT_STRING = "host=localhost port=5432 user=test password=test dbname=test sslmode=disable"
+const DB_CONNECT_STRING = "host=localhost port=6432 user=test password=test dbname=test sslmode=disable"
 
 func GenClientRepository() Domain.ClientRepositoryInterface {
 	once.Do(func() {

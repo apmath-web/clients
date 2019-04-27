@@ -2,6 +2,7 @@ package applicationModels
 
 import (
 	"database/sql"
+	"errors"
 	"github.com/apmath-web/clients/Domain"
 	"github.com/jmoiron/sqlx"
 )
@@ -124,5 +125,59 @@ func (c *ClientApplicationModel) GetClient(id int, db *sqlx.DB) error {
 		return err
 	}
 	c.Jobs = jobs
+	return nil
+}
+
+func (c *ClientApplicationModel) UpdateClient(cl Domain.ClientDomainModelInterface, tx *sql.Tx) error {
+	if c.FirstName != cl.GetFirstName() {
+		if _, err := tx.Exec("UPDATE clients SET first_name=$2 WHERE id=$1",
+			c.Id, cl.GetFirstName()); err != nil {
+			return err
+		}
+	}
+	if c.LastName != cl.GetLastName() {
+		if _, err := tx.Exec("UPDATE clients SET last_name=$2 WHERE id=$1",
+			c.Id, cl.GetLastName()); err != nil {
+			return err
+		}
+	}
+	if c.BirthDate != cl.GetBirthDate() {
+		if _, err := tx.Exec("UPDATE clients SET birth_date=$2 WHERE id=$1",
+			c.Id, cl.GetBirthDate()); err != nil {
+			return err
+		}
+	}
+	if c.Sex != cl.GetSex() {
+		if _, err := tx.Exec("UPDATE clients SET sex=$2 WHERE id=$1",
+			c.Id, cl.GetSex()); err != nil {
+			return err
+		}
+	}
+	if c.MaritalStatus != cl.GetMaritalStatus() {
+		if _, err := tx.Exec("UPDATE clients SET marital_status=$2 WHERE id=$1",
+			c.Id, cl.GetMaritalStatus()); err != nil {
+			return err
+		}
+	}
+	if c.Children != cl.GetChildren() {
+		if _, err := tx.Exec("UPDATE clients SET children=$2 WHERE id=$1",
+			c.Id, cl.GetChildren()); err != nil {
+			return err
+		}
+	}
+	if err := c.Passport.UpdatePassport(cl.GetPassport(), tx); err != nil {
+		return errors.New("Not unic creditionals")
+	}
+	if _, err := tx.Exec("DELETE FROM jobs WHERE client_id=$1", c.Id); err != nil {
+		return err
+	}
+	for _, domainJob := range cl.GetJobs() {
+		job := new(JobApplicationModel)
+		job.Hydrate(domainJob)
+		job.ClientId = c.Id
+		if err := job.SaveJob(tx); err != nil {
+			return err
+		}
+	}
 	return nil
 }
