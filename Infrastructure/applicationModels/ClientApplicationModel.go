@@ -3,6 +3,7 @@ package applicationModels
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"github.com/apmath-web/clients/Domain"
 	"github.com/jmoiron/sqlx"
 )
@@ -129,39 +130,30 @@ func (c *ClientApplicationModel) GetClient(id int, db *sqlx.DB) error {
 }
 
 func (c *ClientApplicationModel) UpdateClient(cl Domain.ClientDomainModelInterface, tx *sql.Tx) error {
+	queryString := "UPDATE clients SET "
 	if c.FirstName != cl.GetFirstName() {
-		if _, err := tx.Exec("UPDATE clients SET first_name=$2 WHERE id=$1",
-			c.Id, cl.GetFirstName()); err != nil {
-			return err
-		}
+		queryString += fmt.Sprintf("first_name = '%s', ", cl.GetFirstName())
 	}
 	if c.LastName != cl.GetLastName() {
-		if _, err := tx.Exec("UPDATE clients SET last_name=$2 WHERE id=$1",
-			c.Id, cl.GetLastName()); err != nil {
-			return err
-		}
+		queryString += fmt.Sprintf("last_name = '%s', ", cl.GetLastName())
 	}
 	if c.BirthDate != cl.GetBirthDate() {
-		if _, err := tx.Exec("UPDATE clients SET birth_date=$2 WHERE id=$1",
-			c.Id, cl.GetBirthDate()); err != nil {
-			return err
-		}
+		queryString += fmt.Sprintf("birth_date = '%s', ", cl.GetBirthDate())
 	}
 	if c.Sex != cl.GetSex() {
-		if _, err := tx.Exec("UPDATE clients SET sex=$2 WHERE id=$1",
-			c.Id, cl.GetSex()); err != nil {
-			return err
-		}
+		queryString += fmt.Sprintf("sex = '%s', ", cl.GetSex())
 	}
 	if c.MaritalStatus != cl.GetMaritalStatus() {
-		if _, err := tx.Exec("UPDATE clients SET marital_status=$2 WHERE id=$1",
-			c.Id, cl.GetMaritalStatus()); err != nil {
-			return err
-		}
+		queryString += fmt.Sprintf("marital_status = '%s', ", cl.GetFirstName())
 	}
 	if c.Children != cl.GetChildren() {
-		if _, err := tx.Exec("UPDATE clients SET children=$2 WHERE id=$1",
-			c.Id, cl.GetChildren()); err != nil {
+		queryString += fmt.Sprintf("children = '%d', ", cl.GetChildren())
+	}
+	if queryString != "UPDATE clients SET " {
+		queryString = queryString[0 : len(queryString)-2]
+		queryString += fmt.Sprintf(" WHERE id = %d;", c.Id)
+		fmt.Println(queryString)
+		if _, err := tx.Exec(queryString); err != nil {
 			return err
 		}
 	}
