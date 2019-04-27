@@ -21,6 +21,5 @@ script:
   - go test ./... -cover -v
   - docker-compose up --build -d
   - docker-compose run migrate migrate
-  - curl http://127.0.0.1:8080/v1/1
   - 'x=`ls data/sql | wc -l`; while [ $x -gt 0 ]; do docker-compose run migrate down; x=$(($x-1)); done'
   - docker-compose down
