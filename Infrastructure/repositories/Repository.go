@@ -30,9 +30,11 @@ func (r *clientRepository) insertClient(cl applicationModels.ClientApplicationMo
 		return 0, err
 	}
 	if id, err := cl.SaveClient(tx); err != nil {
+		_ = tx.Rollback()
 		return 0, err
 	} else {
 		if err = tx.Commit(); err != nil {
+			_ = tx.Rollback()
 			return 0, err
 		}
 		return id, nil
@@ -59,9 +61,14 @@ func (r *clientRepository) ChangeClient(id int, model Domain.ClientDomainModelIn
 		return err
 	}
 	if err := client.UpdateClient(model, tx); err != nil {
+		_ = tx.Rollback()
 		return err
 	}
-	return tx.Commit()
+	if err := tx.Commit(); err != nil {
+		_ = tx.Rollback()
+		return err
+	}
+	return nil
 }
 
 var repo *clientRepository
