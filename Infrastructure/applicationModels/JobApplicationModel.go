@@ -36,3 +36,10 @@ func (j *JobApplicationModel) SaveJob(tx *sql.Tx) error {
 	j.Id = jobId
 	return nil
 }
+
+func (j *JobApplicationModel) DeleteJob(tx *sql.Tx) error {
+	if _, err := tx.Exec("DELETE FROM jobs WHERE id=$1", j.Id); err != nil {
+		return err
+	}
+	return nil
+}

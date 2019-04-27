@@ -168,15 +168,33 @@ func (c *ClientApplicationModel) UpdateClient(cl Domain.ClientDomainModelInterfa
 	if err := c.Passport.UpdatePassport(cl.GetPassport(), tx); err != nil {
 		return errors.New("Not unic creditionals")
 	}
-	if _, err := tx.Exec("DELETE FROM jobs WHERE client_id=$1", c.Id); err != nil {
-		return err
-	}
 	for _, domainJob := range cl.GetJobs() {
-		job := new(JobApplicationModel)
-		job.Hydrate(domainJob)
-		job.ClientId = c.Id
-		if err := job.SaveJob(tx); err != nil {
-			return err
+		exist := false
+		for _, job := range c.Jobs {
+			if job.Wage == domainJob.GetWage() && job.Name == domainJob.GetName() {
+				exist = true
+			}
+		}
+		if !exist {
+			newJob := new(JobApplicationModel)
+			newJob.Hydrate(domainJob)
+			newJob.ClientId = c.Id
+			if err := newJob.SaveJob(tx); err != nil {
+				return err
+			}
+		}
+	}
+	for _, job := range c.Jobs {
+		exist := false
+		for _, domainJob := range cl.GetJobs() {
+			if job.Wage == domainJob.GetWage() && job.Name == domainJob.GetName() {
+				exist = true
+			}
+		}
+		if !exist {
+			if err := job.DeleteJob(tx); err != nil {
+				return err
+			}
 		}
 	}
 	return nil
