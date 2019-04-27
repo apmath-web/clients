@@ -20,6 +20,7 @@ script:
   - go build application.go
   - go test ./... -cover -v
   - docker-compose up --build -d
+  - sleep 10
   - docker-compose run migrate migrate
   - 'x=`ls data/sql | wc -l`; while [ $x -gt 0 ]; do docker-compose run migrate down; x=$(($x-1)); done'
   - docker-compose down
