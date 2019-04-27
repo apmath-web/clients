@@ -28,7 +28,7 @@ func Get(c *gin.Context) {
 		validator := validation.GenValidation()
 		validator.SetMessage(err.Error())
 		str, _ := json.Marshal(validator)
-		c.String(http.StatusBadRequest, string(str))
+		c.String(http.StatusNotFound, string(str))
 		return
 	}
 	vm := new(viewModels.ClientViewModel)
