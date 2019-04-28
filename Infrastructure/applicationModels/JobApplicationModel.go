@@ -1,10 +1,15 @@
 package applicationModels
 
-import "github.com/apmath-web/clients/Domain"
+import (
+	"database/sql"
+	"github.com/apmath-web/clients/Domain"
+)
 
 type JobApplicationModel struct {
-	Name string
-	Wage int
+	Id       int    `db:"id"`
+	Name     string `db:"name"`
+	Wage     int    `db:"wage"`
+	ClientId int    `db:"client_id"`
 }
 
 func (j *JobApplicationModel) GetName() string {
@@ -18,4 +23,23 @@ func (j *JobApplicationModel) GetWage() int {
 func (j *JobApplicationModel) Hydrate(job Domain.JobDomainModelInterface) {
 	j.Wage = job.GetWage()
 	j.Name = job.GetName()
+}
+
+func (j *JobApplicationModel) SaveJob(tx *sql.Tx) error {
+	var jobId int
+	if err := tx.QueryRow("INSERT INTO jobs "+
+		"(name, wage, client_id) VALUES "+
+		"($1, $2, $3) RETURNING id",
+		j.GetName(), j.Wage, j.ClientId).Scan(&jobId); err != nil {
+		return err
+	}
+	j.Id = jobId
+	return nil
+}
+
+func (j *JobApplicationModel) DeleteJob(tx *sql.Tx) error {
+	if _, err := tx.Exec("DELETE FROM jobs WHERE id=$1", j.Id); err != nil {
+		return err
+	}
+	return nil
 }

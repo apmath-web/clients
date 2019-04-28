@@ -1,45 +1,96 @@
 package repositories
 
 import (
-	"errors"
+	"fmt"
 	"github.com/apmath-web/clients/Domain"
+	"github.com/apmath-web/clients/Infrastructure/applicationModels"
+	"github.com/apmath-web/clients/Infrastructure/mapper"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
+	"log"
+	"os"
 	"sync"
 )
 
 type clientRepository struct {
-	clients         map[int]Domain.ClientDomainModelInterface
-	NumberOfClients int
+	db *sqlx.DB
 }
 
 func (r *clientRepository) GetClient(id int) (Domain.ClientDomainModelInterface, error) {
-	client, ok := r.clients[id]
-	if ok {
-		return client, nil
+	client := new(applicationModels.ClientApplicationModel)
+	if err := client.GetClient(id, r.db); err != nil {
+		return nil, err
 	}
-	return nil, errors.New("No client with such id")
+	return mapper.ClientApplicationMapper(*client), nil
 }
+
+func (r *clientRepository) insertClient(cl applicationModels.ClientApplicationModel) (int, error) {
+	tx, err := r.db.Begin()
+	if err != nil {
+		return 0, err
+	}
+	if id, err := cl.SaveClient(tx); err != nil {
+		_ = tx.Rollback()
+		return 0, err
+	} else {
+		if err = tx.Commit(); err != nil {
+			_ = tx.Rollback()
+			return 0, err
+		}
+		return id, nil
+	}
+}
+
 func (r *clientRepository) SetClient(model Domain.ClientDomainModelInterface) (int, error) {
-	r.NumberOfClients++
-	id := r.NumberOfClients
-	r.clients[id] = model
-	return id, nil
+	var client applicationModels.ClientApplicationModel
+	client.Hydrate(model)
+	if id, err := r.insertClient(client); err != nil {
+		return 0, err
+	} else {
+		return id, nil
+	}
 }
 
 func (r *clientRepository) ChangeClient(id int, model Domain.ClientDomainModelInterface) error {
-	_, ok := r.clients[id]
-	if ok {
-		r.clients[id] = model
-		return nil
+	client := new(applicationModels.ClientApplicationModel)
+	if err := client.GetClient(id, r.db); err != nil {
+		return err
 	}
-	return errors.New("No client with such id")
+	tx, err := r.db.Begin()
+	if err != nil {
+		return err
+	}
+	if err := client.UpdateClient(model, tx); err != nil {
+		_ = tx.Rollback()
+		return err
+	}
+	if err := tx.Commit(); err != nil {
+		_ = tx.Rollback()
+		return err
+	}
+	return nil
 }
 
 var repo *clientRepository
 var once sync.Once
 
+func dbConfig() string {
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	user := os.Getenv("DB_USER")
+	pass := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_NAME")
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		host, port, user, pass, dbname)
+}
+
 func GenClientRepository() Domain.ClientRepositoryInterface {
 	once.Do(func() {
-		repo = &clientRepository{make(map[int]Domain.ClientDomainModelInterface), 0}
+		db, err := sqlx.Connect("postgres", dbConfig())
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+		repo = &clientRepository{db}
 	})
 	return repo
 }
